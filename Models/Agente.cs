@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace FelipeB_App3BI.Models
+{
+    public class Agente
+    {
+        [Required]
+        [MaxLength(50)]
+        public string Nome { get; set; }
+
+        [Required]
+        [Remote("CheckCpf", "Agente", HttpMethod = "POST")]
+        public int[] CPF { get; set; }
+
+        [Phone]
+        public string Telefone { get; set; }
+
+        [Required]
+        public Endereco Endereco { get; set; }
+    }
+
+    public class Endereco 
+    {
+        [Required]
+        public string Logradouro { get; set; }
+
+        [Required]
+        public string Cidade { get; set; }
+
+        [Required]
+        public string Estado { get; set; }
+
+        [Required]
+        public int Numero { get; set; }
+    }
+}

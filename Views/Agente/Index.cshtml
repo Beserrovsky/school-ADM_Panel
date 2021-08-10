@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Agentes";
+    ViewBag.ActiveIndex = 1;
+}
+
+<h1 class="bg-danger text-white display-2 text-center rounded p-3">Apenas pessoal autorizado!</h1>
+
+<div class="d-flex justify-content-around align-items-center mt-5 pb-3">
+    <a class="col-5 card rounded link px-0 shadow" href="@Url.Action("Clientes", "Agente")">
+        <h1 class="display-4 text-center card-header">Clientes 🧔</h1>
+        <div class="d-flex mt-3 justify-content-center">
+            <p class="text-dark text-center">Lembre-se sempre, suas ações tem consequências!</p>
+        </div>
+    </a>
+    <a class="col-5 card rounded link px-0 shadow" href="@Url.Action("Funcionarios", "Agente")">
+        <h1 class="display-4 text-center card-header">Funcionarios 👷‍♂️</h1>
+        <div class="d-flex mt-3 justify-content-center">
+            <p class="text-dark text-center">Com grandes poderes, vem grandes responsabilidades!</p>
+        </div>
+    </a>
+</div>
