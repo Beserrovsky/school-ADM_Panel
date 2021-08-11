@@ -15,7 +15,7 @@ namespace FelipeB_App3BI.Models
 
         [Required]
         [Remote("CheckCpf", "Agente", HttpMethod = "POST")]
-        public int[] CPF { get; set; }
+        public string CPF { get; set; }
 
         [Phone]
         public string Telefone { get; set; }
