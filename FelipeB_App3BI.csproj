@@ -161,6 +161,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Dados\AgenteDTO.cs" />
@@ -311,8 +313,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Agente\Funcionarios.cshtml" />
-    <Content Include="Views\Agente\Clientes.cshtml" />
+    <Content Include="Views\Funcionario\Funcionarios.cshtml" />
+    <Content Include="Views\Cliente\Clientes.cshtml" />
     <Content Include="Views\Agente\Index.cshtml" />
     <Content Include="Views\Produto\Index.cshtml" />
   </ItemGroup>

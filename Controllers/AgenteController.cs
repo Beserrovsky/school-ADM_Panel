@@ -13,21 +13,6 @@ namespace FelipeB_App3BI.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Funcionarios()
-        {
-
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult Clientes()
-        {
-
-            return View();
-        }
-
-
         [HttpPost]
         public JsonResult CheckCpf(string cpf) 
         {
