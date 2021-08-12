@@ -33,6 +33,17 @@ namespace Database
             cmd.ExecuteNonQuery();
         }
 
+        public object ExecuteScalar(string command, MySqlParameter[] parameters)
+        {
+            MySqlCommand cmd = new MySqlCommand(command, conn);
+            foreach (MySqlParameter parameter in parameters)
+            {
+                cmd.Parameters.Add(parameter);
+            }
+
+            return cmd.ExecuteScalar();
+        }
+
         public MySqlDataReader RunAndRead(string command, MySqlParameter[] parameters)
         {
             MySqlCommand cmd = new MySqlCommand(command, conn);

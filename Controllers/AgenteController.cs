@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FelipeB_App3BI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,15 +14,31 @@ namespace FelipeB_App3BI.Controllers
             return View();
         }
 
+        // POST: Agente/Save
+        [HttpPost]
+        public ActionResult Save(AgenteModel agente)
+        {
+            throw new NotImplementedException();
+        }
+
+        // POST: Agente/Delete
+        [HttpPost]
+        public ActionResult Delete(string cpf)
+        {
+            throw new NotImplementedException();
+        }
+
+        // POST: Agente/CheckCpf/cpf=string
         [HttpPost]
         public JsonResult CheckCpf(string cpf) 
         {
 
-            return Json(isCpfValid(cpf));
+            return Json(IsCpfValid(cpf));
         }
 
-        public static bool isCpfValid(string cpf) 
+        static bool IsCpfValid(string cpf) 
         {
+
             if (cpf.Length != 11) return false; // Verifica se Array está mal formatado
 
             int[] cpf_arr = new int[11];
@@ -50,6 +67,5 @@ namespace FelipeB_App3BI.Controllers
 
             return true;
         }
-
     }
 }

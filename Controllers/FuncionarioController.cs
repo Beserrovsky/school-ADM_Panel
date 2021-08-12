@@ -14,43 +14,18 @@ namespace FelipeB_App3BI.Controllers
             return View("Funcionarios");
         }
 
-        // POST: Funcionario/Create
+        // POST: Funcionario/Add
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Add(string cpf)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            throw new NotImplementedException();
         }
 
-        // POST: Funcionario/Edit/5
+        // POST: Funcionario/Del
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Del(string cpf)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: Funcionario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            return View();
+            throw new NotImplementedException();
         }
     }
 }

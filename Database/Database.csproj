@@ -105,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAOs\AgenteDAO.cs" />
     <Compile Include="DAOs\ClienteDAO.cs" />
     <Compile Include="DAOs\ProdutoDAO.cs" />
     <Compile Include="DAOs\FuncionarioDAO.cs" />
