@@ -37,14 +37,11 @@ namespace FelipeB_App3BI.Controllers
 
         public static bool isCpfValid(string cpf) 
         {
-
-            if (!cpf.All(c => c >= '0' && c <= '9')) return false; // Verifica se String pode ser tratada como int[]
-
             if (cpf.Length != 11 || cpf.All(v => v == cpf[0])) return false; // Verifica se Array está mal formatado ou tem todos os digitos iguais
 
             int[] cpf_arr = new int[11];
-            for (int i = 0; i < cpf.Length; i++) 
-                cpf_arr[i] = int.Parse(cpf[i].ToString()); // Converte de String para int[]
+            for (int i = 0; i < cpf.Length; i++)
+                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[i])) return false; // Converte de String para int[] e retorna falso caso não seja um número
 
             int sum = 0;
 
