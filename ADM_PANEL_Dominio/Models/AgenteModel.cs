@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace FelipeB_App3BI.Models
 {
-    public class Agente
+    public class AgenteModel
     {
         [Required]
         [MaxLength(50)]

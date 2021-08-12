@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FelipeB_App3BI.Models
 {
-    public class FuncionarioModel : Agente
+    public class ClienteModel : AgenteModel
     {
 
     }
