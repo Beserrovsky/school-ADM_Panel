@@ -22,7 +22,7 @@ namespace FelipeB_App3BI.Controllers
 
         public static bool isCpfValid(string cpf) 
         {
-            if (cpf.Length != 11 || cpf.All(v => v == cpf[0])) return false; // Verifica se Array está mal formatado ou tem todos os digitos iguais
+            if (cpf.Length != 11) return false; // Verifica se Array está mal formatado
 
             int[] cpf_arr = new int[11];
             for (int i = 0; i < cpf.Length; i++)
