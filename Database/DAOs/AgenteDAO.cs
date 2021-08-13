@@ -11,6 +11,103 @@ namespace Database
     public class AgenteDAO
     {
 
+        public List<AgenteModel> GetAll() 
+        {
+            List<AgenteModel> agentes = new List<AgenteModel>();
+
+            using (DB db = new DB())
+            {
+                MySqlDataReader dr = db.RunAndRead($"Select * from agentes_types_view", new MySqlParameter[0]);
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        AgenteModel agente = new AgenteModel()
+                        {
+                            CPF = dr.GetString(0),
+                            Nome = dr.GetString(1),
+                            Telefone = dr.GetString(2),
+                            Endereco = new Endereco()
+                            {
+                                Logradouro = dr.GetString(3),
+                                Numero = dr.GetInt32(4),
+                                Cidade = dr.GetString(5),
+                                Estado = dr.GetString(6),
+                            },
+                            IsCliente = dr.GetInt32(7) == 1,
+                            IsFuncionario = dr.GetInt32(8) == 1
+                        };
+
+                        agentes.Add(agente);
+                    }
+                }
+
+                dr.Close();
+            }
+
+            return agentes;
+        }
+
+        public int Count()
+        {
+
+            int agentes_count = 0;
+
+            using (DB db = new DB()) 
+            {
+
+                MySqlDataReader dr = db.RunAndRead("Select COUNT(*) from Agente", new MySqlParameter[0]);
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        agentes_count = dr.GetInt32(0);
+                    }
+                }
+
+            }
+
+            return agentes_count;
+        }
+
+        public AgenteModel Get(string cpf)
+        {
+            AgenteModel agente = null;
+
+            using (DB db = new DB())
+            {
+                MySqlDataReader dr = db.RunAndRead($"Select * from agentes_types_view WHERE agentes_types_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        agente = new AgenteModel()
+                        {
+                            CPF = dr.GetString(0),
+                            Nome = dr.GetString(1),
+                            Telefone = dr.GetString(2),
+                            Endereco = new Endereco()
+                            {
+                                Logradouro = dr.GetString(3),
+                                Numero = dr.GetInt32(4),
+                                Cidade = dr.GetString(5),
+                                Estado = dr.GetString(6),
+                            },
+                            IsCliente = dr.GetInt32(7)==1,
+                            IsFuncionario = dr.GetInt32(8)==1
+                       };
+                    }
+                }
+
+                dr.Close();
+            }
+
+            return agente;
+        }
+
         public void Save(AgenteModel agente)
         {
 

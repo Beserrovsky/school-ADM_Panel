@@ -1,21 +1,82 @@
-﻿@{
+﻿@model List<FelipeB_App3BI.Models.AgenteModel>
+@{
     ViewBag.Title = "Agentes";
     ViewBag.ActiveIndex = 1;
 }
 
-<h1 class="bg-danger text-white display-2 text-center rounded p-3">Apenas pessoal autorizado!</h1>
+<h1 class="bg-danger text-white display-2 text-center rounded-top p-3 mb-0">Apenas pessoal autorizado!</h1>
+<h5 class="bg-danger text-white-50 font-italic text-center rounded-bottom p-3 mt-0">Com grandes poderes, vem grandes responsabilidades!</h5>
 
-<div class="d-flex justify-content-around align-items-center mt-5 pb-3">
-    <a class="col-5 card rounded link px-0 shadow" href="@Url.Action("Index", "Cliente")">
-        <h1 class="display-4 text-center card-header">Clientes 🧔</h1>
-        <div class="d-flex mt-3 justify-content-center">
-            <p class="text-dark text-center">Lembre-se sempre, suas ações tem consequências!</p>
+<div class="row d-flex justify-content-around align-items-center mt-5 pb-3">
+    <div class="col-5 card rounded link px-0 shadow">
+        <h1 class="text-center card-header">Clientes 🧔</h1>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item font-italic">
+                <div class="d-flex justify-content-around"><span>Quantidade cadastrados: @ViewBag.ClientesCount</span></div>
+            </li>
+            <li class="list-group-item font-italic">
+                <div class="d-flex justify-content-center"><a class="btn btn-primary" href="@Url.Action("Index", "Cliente")">Visualizar</a></div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-5 card rounded link px-0 shadow">
+        <h1 class="text-center card-header">Funcionarios 👷‍♂️</h1>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item font-italic">
+                <div class="d-flex justify-content-around"><span>Quantidade cadastrados: @ViewBag.FuncionariosCount</span></div>
+            </li>
+            <li class="list-group-item font-italic">
+                <div class="d-flex justify-content-center"><a class="btn btn-primary" href="@Url.Action("Index", "Funcionario")">Visualizar</a></div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 card rounded link px-0 shadow">
+        <h1 class="text-center card-header">Agentes</h1>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(Model => Model[0].CPF)</th>
+                        <th scope="col">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
+                        <th scope="col">@Html.DisplayNameFor(Model => Model[0].Telefone)</th>
+                        <th scope="col">@Html.DisplayNameFor(Model => Model[0].Endereco.Cidade)</th>
+                        <th scope="col">@Html.DisplayNameFor(Model => Model[0].Endereco.Estado)</th>
+                        <th scope="col">@Html.DisplayNameFor(Model => Model[0].Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model[0].Endereco.Numero)</th>
+                        <th scope="col">-</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+
+                        foreach (var m in Model)
+                        {
+                            <tr>
+                                <th scope="row">@m.CPF</th>
+                                <td>@m.Nome</td>
+                                <td>@m.Telefone</td>
+                                <td>@m.Endereco.Cidade</td>
+                                <td>@m.Endereco.Estado</td>
+                                <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
+                                <td class="d-flex">
+                                    <a href="@Url.Action("Details", new { cpf = m.CPF })" class="btn btn-outline-info rounded mr-3">Editar</a>
+
+                                    @using (Html.BeginForm(m.IsCliente?"Del":"Add", "Cliente", FormMethod.Post))
+                                    {
+                                        <button class="btn btn-outline-@(m.IsCliente?"danger":"primary") rounded" type="submit" name="cpf" value="@m.CPF">@(m.IsCliente?"➖":"➕") 🧔</button>
+                                    }
+
+                                    @using (Html.BeginForm(m.IsFuncionario ? "Del" : "Add", "Funcionario", FormMethod.Post))
+                                    {
+                                        <button class="btn btn-outline-@(m.IsFuncionario?"danger":"primary") rounded" type="submit" name="cpf" value="@m.CPF">@(m.IsFuncionario?"➖":"➕") 👷‍♂️</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-    </a>
-    <a class="col-5 card rounded link px-0 shadow" href="@Url.Action("Index", "Funcionario")">
-        <h1 class="display-4 text-center card-header">Funcionarios 👷‍♂️</h1>
-        <div class="d-flex mt-3 justify-content-center">
-            <p class="text-dark text-center">Com grandes poderes, vem grandes responsabilidades!</p>
-        </div>
-    </a>
+    </div>
 </div>

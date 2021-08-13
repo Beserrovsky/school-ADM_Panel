@@ -10,11 +10,17 @@ namespace FelipeB_App3BI.Controllers
 {
     public class AgenteController : Controller
     {
-        public object AgenteDAO { get; private set; }
 
         public ActionResult Index()
         {
-            return View();
+
+            ViewBag.ClientesCount = new ClienteDAO().Count();
+
+            ViewBag.FuncionariosCount = new FuncionarioDAO().Count();
+
+            List<AgenteModel> agentes = new AgenteDAO().GetAll();
+
+            return View(agentes);
         }
 
         // POST: Agente/Save

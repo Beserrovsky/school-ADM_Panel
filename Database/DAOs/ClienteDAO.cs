@@ -121,7 +121,7 @@ namespace Database
 
                 if (already_cliente) throw new Exception("CPF já cadastrado como cliente!");
 
-                db.Run($"INSERT INTO Clientes VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                db.Run($"INSERT INTO Cliente VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
 
@@ -146,7 +146,7 @@ namespace Database
 
                 if (!already_cliente) throw new Exception("CPF não cadastrado como cliente!");
 
-                db.Run($"DELETE FROM Clientes WHERE Clientes.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                db.Run($"DELETE FROM Cliente WHERE Cliente.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
     }
