@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    class AgenteDAO
+    public class AgenteDAO
     {
 
         public void Save(AgenteModel agente)
@@ -71,6 +71,11 @@ namespace Database
                     db.Run("INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID) VALUES (@cpf, @nome, @telefone, @endereco_id)", agente_parameters);
                 }
             }
+        }
+
+        public void Delete(string cpf) 
+        {
+            throw new NotImplementedException();
         }
 
     }

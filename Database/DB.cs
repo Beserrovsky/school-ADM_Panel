@@ -16,7 +16,7 @@ namespace Database
 
         public DB() 
         {
-            connectionStr = ConfigurationManager.ConnectionStrings["connection"].ConnectionString; // Dependecy injection from App.config
+            connectionStr = ConfigurationManager.ConnectionStrings["default"].ConnectionString; // Dependecy injection from App.config
 
             conn = new MySqlConnection(connectionStr);
             conn.Open();

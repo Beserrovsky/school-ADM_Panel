@@ -81,35 +81,52 @@ namespace Database
             return cliente;
         }
 
-        public void AddAgente(AgenteModel agente) 
+        public void AddAgente(string cpf) 
         {
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
-                bool already_created = dr.HasRows;
+                bool valid_agente = dr.HasRows;
 
                 dr.Close();
 
-                if (already_created) return;
+                if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
 
-                db.Run($"INSERT INTO {TABLE_NAME} VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+
+                bool already_cliente = dr.HasRows;
+
+                dr.Close();
+
+                if (already_cliente) throw new Exception("CPF já cadastrado como cliente!");
+
+                db.Run($"INSERT INTO {TABLE_NAME} VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
 
-        public void DelAgente(AgenteModel agente)
+        public void DelAgente(string cpf)
         {
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
 
-                bool already_created = dr.HasRows;
+                MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+
+                bool valid_agente = dr.HasRows;
 
                 dr.Close();
 
-                if (!already_created) return;
+                if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
 
-                db.Run($"DELETE FROM {TABLE_NAME} WHERE {TABLE_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+
+                bool already_cliente = dr.HasRows;
+
+                dr.Close();
+
+                if (!already_cliente) throw new Exception("CPF não cadastrado como cliente!");
+
+                db.Run($"DELETE FROM {TABLE_NAME} WHERE {TABLE_NAME}.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
     }
