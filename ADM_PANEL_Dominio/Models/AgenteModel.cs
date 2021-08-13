@@ -22,6 +22,11 @@ namespace FelipeB_App3BI.Models
 
         [Required]
         public Endereco Endereco { get; set; }
+
+        public bool IsCliente { get; set; }
+
+        public bool IsFuncionario { get; set; }
+
     }
 
     public class Endereco 
