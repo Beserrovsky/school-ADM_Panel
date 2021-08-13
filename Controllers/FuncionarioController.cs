@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Database;
+using FelipeB_App3BI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,21 +13,34 @@ namespace FelipeB_App3BI.Controllers
         // GET: Funcionario
         public ActionResult Index()
         {
-            return View("Funcionarios");
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+            List<FuncionarioModel> funcionarios = funcionarioDAO.GetAll();
+
+            return View("Funcionarios", funcionarios);
         }
 
         // POST: Funcionario/Add
         [HttpPost]
         public ActionResult Add(string cpf)
         {
-            throw new NotImplementedException();
+
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+            try { funcionarioDAO.AddAgente(cpf); }
+            catch (Exception e) { return View("Error", e); }
+
+            return RedirectToAction("Index", "Agente");
         }
 
         // POST: Funcionario/Del
         [HttpPost]
         public ActionResult Del(string cpf)
         {
-            throw new NotImplementedException();
+
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+            try { funcionarioDAO.DelAgente(cpf); }
+            catch (Exception e) { return View("Error", e); }
+
+            return RedirectToAction("Index", "Agente");
         }
     }
 }
