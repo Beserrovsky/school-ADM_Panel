@@ -10,8 +10,6 @@ namespace Database
 {
     public class FuncionarioDAO
     {
-        const string TABLE_NAME = "Funcionario";
-        const string VIEW_NAME = "funcionarios_view";
 
         public List<FuncionarioModel> GetAll()
         {
@@ -19,7 +17,7 @@ namespace Database
 
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME}", new MySqlParameter[0]);
+                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view", new MySqlParameter[0]);
 
                 if (dr.HasRows)
                 {
@@ -47,13 +45,35 @@ namespace Database
             return funcionarios;
         }
 
+        public int Count()
+        {
+            int funcionarios_count = 0;
+
+            using (DB db = new DB())
+            {
+                MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from funcionarios_view", new MySqlParameter[0]);
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        funcionarios_count = dr.GetInt32(0);
+                    }
+                }
+
+                dr.Close();
+            }
+
+            return funcionarios_count;
+        }
+
         public FuncionarioModel Get(string cpf)
         {
             FuncionarioModel funcionario = null;
 
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
                 if (dr.HasRows)
                 {
@@ -85,7 +105,7 @@ namespace Database
         {
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
 
                 bool already_created = dr.HasRows;
 
@@ -93,7 +113,7 @@ namespace Database
 
                 if (already_created) return;
 
-                db.Run($"INSERT INTO {TABLE_NAME} VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                db.Run($"INSERT INTO Funcionario VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
             }
         }
 
@@ -101,7 +121,7 @@ namespace Database
         {
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
 
                 bool already_created = dr.HasRows;
 
@@ -109,7 +129,7 @@ namespace Database
 
                 if (!already_created) return;
 
-                db.Run($"DELETE FROM {TABLE_NAME} WHERE {TABLE_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                db.Run($"DELETE FROM Funcionario WHERE Funcionario.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
             }
         }
     }

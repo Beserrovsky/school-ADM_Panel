@@ -10,8 +10,6 @@ namespace Database
 {
     public class ClienteDAO
     {
-        const string TABLE_NAME = "Cliente";
-        const string VIEW_NAME = "clientes_view";
 
         public List<ClienteModel> GetAll()
         {
@@ -19,7 +17,7 @@ namespace Database
 
             using (DB db = new DB()) 
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME}", new MySqlParameter[0]);
+                MySqlDataReader dr = db.RunAndRead($"Select * from clientes_view", new MySqlParameter[0]);
 
                 if (dr.HasRows)
                 {
@@ -47,13 +45,35 @@ namespace Database
             return clientes;
         }
 
+        public int Count()
+        {
+            int clientes_count = 0;
+
+            using (DB db = new DB())
+            {
+                MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from clientes_view", new MySqlParameter[0]);
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        clientes_count = dr.GetInt32(0);
+                    }
+                }
+
+                dr.Close();
+            }
+
+            return clientes_count;
+        }
+
         public ClienteModel Get(string cpf)
         {
             ClienteModel cliente = null;
 
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
                 if (dr.HasRows)
                 {
@@ -93,7 +113,7 @@ namespace Database
 
                 if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
 
-                dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
                 bool already_cliente = dr.HasRows;
 
@@ -101,7 +121,7 @@ namespace Database
 
                 if (already_cliente) throw new Exception("CPF já cadastrado como cliente!");
 
-                db.Run($"INSERT INTO {TABLE_NAME} VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                db.Run($"INSERT INTO Clientes VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
 
@@ -118,7 +138,7 @@ namespace Database
 
                 if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
 
-                dr = db.RunAndRead($"Select * from {VIEW_NAME} WHERE {VIEW_NAME}.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
                 bool already_cliente = dr.HasRows;
 
@@ -126,7 +146,7 @@ namespace Database
 
                 if (!already_cliente) throw new Exception("CPF não cadastrado como cliente!");
 
-                db.Run($"DELETE FROM {TABLE_NAME} WHERE {TABLE_NAME}.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                db.Run($"DELETE FROM Clientes WHERE Clientes.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
     }
