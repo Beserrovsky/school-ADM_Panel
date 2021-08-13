@@ -1,4 +1,5 @@
 ﻿using FelipeB_App3BI.Models;
+using Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace FelipeB_App3BI.Controllers
 {
     public class AgenteController : Controller
     {
+        public object AgenteDAO { get; private set; }
+
         public ActionResult Index()
         {
             return View();
@@ -18,14 +21,32 @@ namespace FelipeB_App3BI.Controllers
         [HttpPost]
         public ActionResult Save(AgenteModel agente)
         {
-            throw new NotImplementedException();
+            try
+            {
+                new AgenteDAO().Save(agente);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e) 
+            {
+                return View("Erro", e);
+            }
         }
 
         // POST: Agente/Delete
         [HttpPost]
         public ActionResult Delete(string cpf)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!IsCpfValid(cpf)) return View("Error", new Exception("CPF não válido!"));
+
+                new AgenteDAO().Delete(cpf);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return View("Erro", e);
+            }
         }
 
         // POST: Agente/CheckCpf/cpf=string
@@ -36,7 +57,7 @@ namespace FelipeB_App3BI.Controllers
             return Json(IsCpfValid(cpf));
         }
 
-        static bool IsCpfValid(string cpf) 
+        public static bool IsCpfValid(string cpf) 
         {
 
             if (cpf.Length != 11) return false; // Verifica se Array está mal formatado
