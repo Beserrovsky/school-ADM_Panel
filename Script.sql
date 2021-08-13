@@ -42,6 +42,12 @@ CREATE TABLE Produto(
     Quantidade int
 );
 
+CREATE VIEW agentes_types_view AS
+SELECT A.*,
+	(SELECT COUNT(*) FROM Cliente WHERE Cliente.Agente_CPf = A.CPF) AS Cliente,
+	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario
+FROM Agente AS A;
+
 CREATE VIEW clientes_view AS
 SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Cidade, E.Estado_UF
 FROM Agente AS A
@@ -126,3 +132,5 @@ VALUES
 SELECT * FROM clientes_view;
 SELECT * FROM funcionarios_view;
 SELECT * FROM produtos_view;
+SELECT * FROM agentes_types_view;
+SELECT * FROM Agente;
