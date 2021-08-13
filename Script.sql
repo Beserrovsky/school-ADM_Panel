@@ -43,10 +43,12 @@ CREATE TABLE Produto(
 );
 
 CREATE VIEW agentes_types_view AS
-SELECT A.*,
+SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Cidade, E.Estado_UF,
 	(SELECT COUNT(*) FROM Cliente WHERE Cliente.Agente_CPf = A.CPF) AS Cliente,
 	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario
-FROM Agente AS A;
+FROM Agente AS A
+LEFT JOIN Endereco AS E
+	ON E.ID = A.Endereco_ID;
 
 CREATE VIEW clientes_view AS
 SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Cidade, E.Estado_UF
