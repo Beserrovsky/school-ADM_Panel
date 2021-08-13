@@ -101,11 +101,11 @@ namespace Database
             return funcionario;
         }
 
-        public void AddAgente(AgenteModel agente)
+        public void AddAgente(string cpf)
         {
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
                 bool already_created = dr.HasRows;
 
@@ -113,15 +113,15 @@ namespace Database
 
                 if (already_created) return;
 
-                db.Run($"INSERT INTO Funcionario VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                db.Run($"INSERT INTO Funcionario VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
 
-        public void DelAgente(AgenteModel agente)
+        public void DelAgente(string cpf)
         {
             using (DB db = new DB())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
                 bool already_created = dr.HasRows;
 
@@ -129,7 +129,7 @@ namespace Database
 
                 if (!already_created) return;
 
-                db.Run($"DELETE FROM Funcionario WHERE Funcionario.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                db.Run($"DELETE FROM Funcionario WHERE Funcionario.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
     }
