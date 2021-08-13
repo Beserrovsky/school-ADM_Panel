@@ -18,8 +18,16 @@
                 <li class="nav-item @(ViewBag.ActiveIndex==0? "active" : "")">
                     @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item @(ViewBag.ActiveIndex==1? "active" : "")">
-                    @Html.ActionLink("Agentes", "Index", "Agente", null, new { @class = "nav-link" })
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Agentes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @Html.ActionLink("Painel", "Index", "Agente", null, new { @class = "dropdown-item" })
+                        <div class="dropdown-divider"></div>
+                        @Html.ActionLink("Clientes", "Index", "Cliente", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Funcionários", "Index", "Funcionario", null, new { @class = "dropdown-item" })
+                    </div>
                 </li>
                 <li class="nav-item @(ViewBag.ActiveIndex==2? "active" : "")">
                     @Html.ActionLink("Produtos", "Index", "Produto", null, new { @class = "nav-link" })
