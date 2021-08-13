@@ -14,13 +14,33 @@ namespace FelipeB_App3BI.Controllers
         public ActionResult Index()
         {
 
+            AgenteDAO agenteDAO = new AgenteDAO();
+
+            ViewBag.AgentesCount = agenteDAO.Count();
+
             ViewBag.ClientesCount = new ClienteDAO().Count();
 
             ViewBag.FuncionariosCount = new FuncionarioDAO().Count();
 
-            List<AgenteModel> agentes = new AgenteDAO().GetAll();
+            List<AgenteModel> agentes = agenteDAO.GetAll();
 
             return View(agentes);
+        }
+
+        // GET: Agente/cpf=?
+        public ActionResult Details(string cpf)
+        {
+            AgenteDAO agenteDAO = new AgenteDAO();
+
+            try
+            {
+                AgenteModel agente = agenteDAO.Get(cpf);
+                return View("Agente", agente);
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
         }
 
         // POST: Agente/Save

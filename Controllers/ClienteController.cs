@@ -20,22 +20,6 @@ namespace FelipeB_App3BI.Controllers
             return View("Clientes", clientes);
         }
 
-        // GET: Cliente/cpf=?
-        public ActionResult Details(string cpf)
-        {
-            ClienteDAO clienteDAO = new ClienteDAO();
-
-            try 
-            {
-                ClienteModel cliente = clienteDAO.Get(cpf);
-                return View("Cliente", cliente);
-            }
-            catch (Exception e) 
-            { 
-                return View("Error", e); 
-            }
-        }
-
         // POST: Cliente/Add
         [HttpPost]
         public ActionResult Add(string cpf)
@@ -45,7 +29,7 @@ namespace FelipeB_App3BI.Controllers
             try { clienteDAO.AddAgente(cpf); }
             catch (Exception e) { return View("Error", e); }
 
-            return RedirectToAction("Details", new { cpf });
+            return RedirectToAction("Index", "Agente");
         }
 
         // POST: Cliente/Del
@@ -57,7 +41,7 @@ namespace FelipeB_App3BI.Controllers
             try { clienteDAO.DelAgente(cpf); }
             catch (Exception e) { return View("Error", e); }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Agente");
         }
     }
 }
