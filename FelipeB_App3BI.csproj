@@ -302,6 +302,7 @@
     <Content Include="Views\Cliente\Clientes.cshtml" />
     <Content Include="Views\Agente\Index.cshtml" />
     <Content Include="Views\Produto\Index.cshtml" />
+    <Content Include="Views\Cliente\Cliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

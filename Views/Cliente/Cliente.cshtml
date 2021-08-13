@@ -1,0 +1,13 @@
+﻿@model FelipeB_App3BI.Models.ClienteModel
+@{
+    ViewBag.Title = "Cliente";
+    ViewBag.ActiveIndex = 1;
+}
+
+<h2>Cliente</h2>
+
+@{ 
+    if (Model != null) { 
+        <h2>@Model.Nome</h2>
+    } 
+}
