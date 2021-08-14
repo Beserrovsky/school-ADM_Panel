@@ -43,12 +43,22 @@ namespace FelipeB_App3BI.Controllers
             }
         }
 
+        // GET: Agente/Create
+        public ActionResult Create()
+        {
+
+            AgenteModel agente = new AgenteModel();
+
+            return View("AgenteForm", agente);
+        }
+
         // POST: Agente/Save
         [HttpPost]
         public ActionResult Save(AgenteModel agente)
         {
             try
             {
+                if (!ModelState.IsValid || !IsCpfValid(agente.CPF)) return View("AgenteForm", agente);
                 new AgenteDAO().Save(agente);
                 return RedirectToAction("Index");
             }

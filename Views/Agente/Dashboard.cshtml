@@ -35,7 +35,13 @@
     <div class="col-12 card rounded link px-0 shadow">
         <div class="card-header text-center">
             <h1>Agentes</h1>
+
             <span class="font-italic">Quantidade cadastrados: @ViewBag.AgentesCount</span>
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="d-flex align-items-center h-100">
+                    <a href="@Url.Action("Create", "Agente")" class="btn btn-outline-primary">+ Criar Novo</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <table class="table">

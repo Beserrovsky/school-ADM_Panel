@@ -26,6 +26,15 @@ namespace FelipeB_App3BI.Controllers
             return View("Produto", produto);
         }
 
+        public ActionResult Create() 
+        {
+
+            ProdutoModel produto = new ProdutoModel();
+
+            return View("ProdutoForm", produto);
+        }
+
+        [HttpPost]
         public ActionResult Save(ProdutoModel produto)
         {
 
@@ -33,6 +42,7 @@ namespace FelipeB_App3BI.Controllers
 
             try
             {
+                if (!ModelState.IsValid) return View("ProdutoForm", produto);
                 produtoDAO.Save(produto);
                 return View("Index");
             }
@@ -42,6 +52,7 @@ namespace FelipeB_App3BI.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult Delete(int id)
         {
 

@@ -304,6 +304,8 @@
     <Content Include="Views\Produto\Produtos.cshtml" />
     <Content Include="Views\Agente\Agente.cshtml" />
     <Content Include="Views\Produto\Produto.cshtml" />
+    <Content Include="Views\Agente\AgenteForm.cshtml" />
+    <Content Include="Views\Produto\ProdutoForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

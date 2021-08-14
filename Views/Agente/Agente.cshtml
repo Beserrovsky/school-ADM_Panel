@@ -1,13 +1,17 @@
-﻿@model FelipeB_App3BI.Models.ClienteModel
+﻿@model FelipeB_App3BI.Models.AgenteModel
 @{
-    ViewBag.Title = "Cliente";
+    ViewBag.Title = "Agente";
     ViewBag.ActiveIndex = 1;
 }
-
-<h2>Agente</h2>
-
 @{ 
-    if (Model != null) { 
+    if (Model != null)
+    {
         <h2>@Model.Nome</h2>
-    } 
+    }
+    else
+    {
+        <div class="d-flex rounded bg-danger justify-content-center align-items-center" style="height:75vh; width:100%;">
+            <h1 class="display-1 text-white">Agente não encontrado!</h1>
+        </div>
+    }
 }
