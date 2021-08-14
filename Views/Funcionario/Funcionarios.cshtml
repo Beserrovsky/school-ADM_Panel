@@ -33,7 +33,7 @@
                     <td class="d-flex">
                         <a href="@Url.Action("Details", new { cpf=m.CPF })" class="btn btn-outline-info rounded mr-3">Editar Agente</a>
 
-                        @using (Html.BeginForm("Del", "Cliente", FormMethod.Post))
+                        @using (Html.BeginForm("Del", "Funcionario", FormMethod.Post))
                         {
                     <button class="btn btn-outline-danger rounded" type="submit" name="cpf" value="@m.CPF">- 👷‍♂️</button>
                         }

@@ -300,9 +300,10 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Funcionario\Funcionarios.cshtml" />
     <Content Include="Views\Cliente\Clientes.cshtml" />
-    <Content Include="Views\Agente\Index.cshtml" />
-    <Content Include="Views\Produto\Index.cshtml" />
+    <Content Include="Views\Agente\Dashboard.cshtml" />
+    <Content Include="Views\Produto\Produtos.cshtml" />
     <Content Include="Views\Agente\Agente.cshtml" />
+    <Content Include="Views\Produto\Produto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

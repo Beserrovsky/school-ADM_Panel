@@ -24,7 +24,7 @@ namespace FelipeB_App3BI.Controllers
 
             List<AgenteModel> agentes = agenteDAO.GetAll();
 
-            return View(agentes);
+            return View("Dashboard", agentes);
         }
 
         // GET: Agente/cpf=?

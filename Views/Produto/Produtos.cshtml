@@ -1,0 +1,39 @@
+﻿@model List<FelipeB_App3BI.Models.ProdutoModel>
+@{
+    ViewBag.Title = "Produtos";
+    ViewBag.ActiveIndex = 2;
+}
+
+<h2>Produtos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(Model => Model[0].ID)</th>
+            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
+            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Valor)</th>
+            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Quantidade)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var m in Model)
+            {
+                <tr>
+                    <th scope="row">@m.ID</th>
+                    <td>@m.Nome</td>
+                    <td>@m.Valor</td>
+                    <td>@m.Quantidade</td>
+                    <td class="d-flex">
+                        <a href="@Url.Action("Details", new { id=m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
+
+                        @using (Html.BeginForm("Delete", "Produto", FormMethod.Post))
+                        {
+                            <button class="btn btn-outline-danger rounded" type="submit" name="id" value="@m.ID">Excluir</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
