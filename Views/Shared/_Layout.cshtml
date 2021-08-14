@@ -18,7 +18,7 @@
                 <li class="nav-item @(ViewBag.ActiveIndex==0? "active" : "")">
                     @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown @(ViewBag.ActiveIndex==1? "active" : "")">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Agentes
                     </a>
