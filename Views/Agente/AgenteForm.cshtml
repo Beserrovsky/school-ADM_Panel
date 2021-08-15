@@ -4,5 +4,113 @@
     ViewBag.ActiveIndex = 1;
 }
 
-<h2>AgenteForm</h2>
+@{
 
+    if (Model != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h2>Edição de @(Model.Nome ?? "Agente")</h2>
+                    @{
+                        if ((ViewBag.Editing ?? false))
+                        {
+                            <div class="d-flex align-items-center">
+                                @using (Html.BeginForm("Delete", "Agente", FormMethod.Post))
+                                {
+                                    <button class="btn btn-danger" type="submit" name="cpf" value="@Model.CPF">Deletar</button>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+                <h6 class="text-muted font-italic">@(Model.CPF!=null? @Html.DisplayNameFor(model => model.CPF) + ": " + @Model.CPF : "")</h6>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Save", "Agente", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CPF)
+                        @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.CPF)</small>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nome)
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Nome)</small>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Telefone)
+                        @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Telefone)</small>
+                    </div>
+                    <div class="form-row w-100">
+                        <div class="form-group col-md-3">
+                            <label for="estado">Estado</label>
+                            <select name="Endereco.Estado" id="estado" class="form-control">
+                                <option selected>AC</option>
+                                <option>AL</option>
+                                <option>AP</option>
+                                <option>AM</option>
+                                <option>BA</option>
+                                <option>CE</option>
+                                <option>DF</option>
+                                <option>ES</option>
+                                <option>GO</option>
+                                <option>MA</option>
+                                <option>MT</option>
+                                <option>MS</option>
+                                <option>MG</option>
+                                <option>PA</option>
+                                <option>PB</option>
+                                <option>PR</option>
+                                <option>PE</option>
+                                <option>PI</option>
+                                <option>RJ</option>
+                                <option>RN</option>
+                                <option>RS</option>
+                                <option>RO</option>
+                                <option>RR</option>
+                                <option>SC</option>
+                                <option>SP</option>
+                                <option>SE</option>
+                                <option>TO</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Endereco.Cidade)
+                            @Html.EditorFor(model => model.Endereco.Cidade, new { htmlAttributes = new { @class = "form-control" } })
+                            <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Cidade)</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Endereco.Logradouro)
+                        @Html.EditorFor(model => model.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Logradouro)</small>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Endereco.Numero)
+                        @Html.EditorFor(model => model.Endereco.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Numero)</small>
+                    </div>
+                    <div class="form-check">
+                        @Html.CheckBoxFor(model => model.IsCliente, new { id = "check_cliente", htmlAttributes = new { @class = "form-check-input", @id = "check_cliente" } })
+                        <label class="form-check-label" for="check_cliente">Cliente 🧔</label>
+                    </div>
+                    <div class="form-check">
+                        @Html.CheckBoxFor(model => model.IsFuncionario, new { id = "check_funcionario", htmlAttributes = new { @class = "form-check-input" } })
+                        <label class="form-check-label" for="check_funcionario">Funcionário 👷‍♂️</label>
+                    </div>
+
+                    <div class="d-flex mt-3">
+                        <button type="submit" class="btn btn-primary ml-auto">Enviar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Algo está muito errado! Não tente colocar suas próprias URLS</p>
+    }
+}
