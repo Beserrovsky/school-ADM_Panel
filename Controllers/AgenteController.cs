@@ -80,7 +80,7 @@ namespace FelipeB_App3BI.Controllers
             }
             catch (Exception e) 
             {
-                return View("Erro", e);
+                return View("Error", e);
             }
         }
 
@@ -97,7 +97,7 @@ namespace FelipeB_App3BI.Controllers
             }
             catch (Exception e)
             {
-                return View("Erro", e);
+                return View("Error", e);
             }
         }
 
