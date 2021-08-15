@@ -13,17 +13,43 @@ namespace FelipeB_App3BI.Controllers
         public ActionResult Index()
         {
 
-            List<ProdutoModel> produtos = new ProdutoDAO().GetAll();
-
-            return View("Produtos", produtos);
+            try
+            {
+                List<ProdutoModel> produtos = new ProdutoDAO().GetAll();
+                return View("Produtos", produtos);
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
         }
 
         public ActionResult Details(int id)
         {
 
-            ProdutoModel produto = new ProdutoDAO().Get(id);
+            try
+            {
+                ProdutoModel produto = new ProdutoDAO().Get(id);
+                return View("Produto", produto);
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+        }
 
-            return View("Produto", produto);
+        public ActionResult Edit(int id)
+        {
+
+            try
+            {
+                ProdutoModel produto = new ProdutoDAO().Get(id);
+                return View("ProdutoForm", produto);
+            }
+            catch (Exception e) 
+            {
+                return View("Error", e);
+            }
         }
 
         public ActionResult Create() 
@@ -44,7 +70,7 @@ namespace FelipeB_App3BI.Controllers
             {
                 if (!ModelState.IsValid) return View("ProdutoForm", produto);
                 produtoDAO.Save(produto);
-                return View("Index");
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
@@ -61,7 +87,7 @@ namespace FelipeB_App3BI.Controllers
             try
             {
                 produtoDAO.Delete(id);
-                return View("Index");
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
