@@ -4,36 +4,46 @@
     ViewBag.ActiveIndex = 2;
 }
 
-<h2>Produtos</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].ID)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Valor)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Quantidade)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            foreach (var m in Model)
-            {
-                <tr>
-                    <th scope="row">@m.ID</th>
-                    <td>@m.Nome</td>
-                    <td>@m.Valor</td>
-                    <td>@m.Quantidade</td>
-                    <td class="d-flex">
-                        <a href="@Url.Action("Details", new { id=m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
-
-                        @using (Html.BeginForm("Delete", "Produto", FormMethod.Post))
+<div class="row">
+    <div class="col-12 card rounded link px-0 shadow">
+        <div class="card-header text-center">
+            <h1>Produtos</h1>
+        </div>
+        <div class="card-body py-2">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].ID)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Valor)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Quantidade)</th>
+                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Create")">+ Criar novo</a></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var m in Model)
                         {
-                            <button class="btn btn-outline-danger rounded" type="submit" name="id" value="@m.ID">Excluir</button>
+                            <tr class="pointer" onclick="window.location = '@Url.Action("Details", new { id = m.ID })'">
+                                <th scope="row">@m.ID</th>
+                                <td>@m.Nome</td>
+                                <td>@m.Valor</td>
+                                <td>@m.Quantidade</td>
+                                <td>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="@Url.Action("Details", new { id=m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
+
+                                        @using (Html.BeginForm("Delete", "Produto", FormMethod.Post))
+                                        {
+                                            <button class="btn btn-outline-danger rounded" type="submit" name="id" value="@m.ID">Excluir</button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

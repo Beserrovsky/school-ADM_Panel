@@ -4,42 +4,52 @@
     ViewBag.ActiveIndex = 1;
 }
 
-<h2>Clientes</h2>
+<div class="row">
+    <div class="col-12 card rounded link px-0 shadow">
+        <div class="card-header text-center">
+            <h1>Clientes</h1>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].CPF)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Telefone)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Endereco.Cidade)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Endereco.Estado)</th>
-            <th scope="col">@Html.DisplayNameFor(Model => Model[0].Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model[0].Endereco.Numero)</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ 
-            foreach (var m in Model)
-            {
-                <tr>
-                    <th scope="row">@m.CPF</th>
-                    <td>@m.Nome</td>
-                    <td>@m.Telefone</td>
-                    <td>@m.Endereco.Cidade</td>
-                    <td>@m.Endereco.Estado</td>
-                    <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
-                    <td class="d-flex">
-                        <a href="@Url.Action("Details", new { cpf=m.CPF })" class="btn btn-outline-info rounded mr-3">Editar Agente</a>
-                        
-                        @using (Html.BeginForm("Del", "Cliente", FormMethod.Post))
+            <span class="font-italic">Quantidade cadastrados: @ViewBag.ClientesCount</span>
+        </div>
+        <div class="card-body py-2">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].CPF)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Telefone)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Endereco.Cidade)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Endereco.Estado)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model[0].Endereco.Numero)</th>
+                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Create", "Agente")">+ Criar novo Agente</a></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var m in Model)
                         {
-                            <button class="btn btn-outline-danger rounded" type="submit" name="cpf" value="@m.CPF">- 🧔</button>
+                            <tr class="pointer" onclick="window.location = '@Url.Action("Details", "Agente", new { cpf=m.CPF })'">
+                                <th scope="row">@m.CPF</th>
+                                <td>@m.Nome</td>
+                                <td>@m.Telefone</td>
+                                <td>@m.Endereco.Cidade</td>
+                                <td>@m.Endereco.Estado</td>
+                                <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="@Url.Action("Details", "Agente",  new { cpf=m.CPF })" class="btn btn-outline-info rounded mr-3">Editar Agente</a>
+
+                                        @using (Html.BeginForm("Del", "Cliente", FormMethod.Post))
+                                        {
+                                            <button class="btn btn-outline-danger rounded" type="submit" name="cpf" value="@m.CPF">- 🧔</button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                    </td>
-                </tr>
-            } 
-        }
-    </tbody>
-</table>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
