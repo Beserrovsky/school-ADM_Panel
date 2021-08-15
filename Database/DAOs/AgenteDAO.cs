@@ -169,7 +169,21 @@ namespace Database
 
         public void Delete(string cpf) 
         {
-            throw new NotImplementedException();
+            using (DB db = new DB())
+            {
+
+                MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+
+                bool valid_agente = dr.HasRows;
+
+                dr.Close();
+
+                if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
+
+                db.Run($"DELETE FROM Cliente WHERE Cliente.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                db.Run($"DELETE FROM Funcionario WHERE Funcionario.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+                db.Run($"DELETE FROM Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+            }
         }
 
     }
