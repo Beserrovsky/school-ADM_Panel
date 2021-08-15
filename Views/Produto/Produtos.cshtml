@@ -31,7 +31,7 @@
                                 <td>@m.Quantidade</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a href="@Url.Action("Details", new { id=m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
+                                        <a href="@Url.Action("Edit", new { id=m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
 
                                         @using (Html.BeginForm("Delete", "Produto", FormMethod.Post))
                                         {
