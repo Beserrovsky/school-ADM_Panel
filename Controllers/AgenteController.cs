@@ -43,6 +43,22 @@ namespace FelipeB_App3BI.Controllers
             }
         }
 
+        // GET: Agente/Edit
+        public ActionResult Edit(string cpf)
+        {
+            AgenteDAO agenteDAO = new AgenteDAO();
+
+            try
+            {
+                AgenteModel agente = agenteDAO.Get(cpf);
+                return View("AgenteForm", agente);
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+        }
+
         // GET: Agente/Create
         public ActionResult Create()
         {
