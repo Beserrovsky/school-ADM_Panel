@@ -51,6 +51,7 @@ namespace FelipeB_App3BI.Controllers
             try
             {
                 AgenteModel agente = agenteDAO.Get(cpf);
+                ViewBag.Editing = true;
                 return View("AgenteForm", agente);
             }
             catch (Exception e)
@@ -112,7 +113,7 @@ namespace FelipeB_App3BI.Controllers
         public static bool IsCpfValid(string cpf) 
         {
 
-            if (cpf.Length != 11) return false; // Verifica se Array está mal formatado
+            if (cpf==null || cpf.Length != 11) return false; // Verifica se Array está mal formatado
 
             int[] cpf_arr = new int[11];
             for (int i = 0; i < cpf.Length; i++)
