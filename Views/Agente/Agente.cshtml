@@ -3,15 +3,43 @@
     ViewBag.Title = "Agente";
     ViewBag.ActiveIndex = 1;
 }
-@{ 
+@{
     if (Model != null)
     {
-        <h2>@Model.Nome</h2>
+        <div class="card">
+            <div class="card-header">
+                <h2>@Model.Nome</h2>
+                <h6 class="text-muted font-italic">@Html.DisplayNameFor(model => model.CPF):&nbsp;@Model.CPF</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Telefone):&nbsp;</p><p>@Model.Telefone</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Endereco.Cidade):&nbsp;</p><p>@Model.Endereco.Cidade</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Endereco.Estado):&nbsp;</p><p>@Model.Endereco.Estado</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Endereco.Logradouro) - @Html.DisplayNameFor(model => model.Endereco.Numero):&nbsp;</p><p>@Model.Endereco.Logradouro - @Model.Endereco.Numero</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">Cliente 🧔?&nbsp;</p><p>@(Model.IsCliente?"✔ Sim":"❌ Não")</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">Funcionário 👷‍♂️?&nbsp;</p><p>@(Model.IsFuncionario?"✔ Sim":"❌ Não")</p>
+                </div>
+            </div>
+        </div>
     }
     else
     {
         <div class="d-flex rounded bg-danger justify-content-center align-items-center" style="height:75vh; width:100%;">
-            <h1 class="display-1 text-white">Agente não encontrado!</h1>
+            <div>
+                <h1 class="display-1 text-white text-center">404</h1>
+                <h2 class="text-white lead">Agente não encontrado!</h2>
+            </div>
         </div>
     }
 }
