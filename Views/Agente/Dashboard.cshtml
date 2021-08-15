@@ -65,7 +65,7 @@
                                 <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
                                 <td colspan="3">
                                     <div class="d-flex justify-content-between">
-                                        <a href="@Url.Action("Details", new { cpf = m.CPF })" class="btn btn-outline-info rounded mr-1">Editar</a>
+                                        <a href="@Url.Action("Edit", new { cpf = m.CPF })" class="btn btn-outline-info rounded mr-1">Editar</a>
 
                                         @using (Html.BeginForm(m.IsCliente ? "Del" : "Add", "Cliente", FormMethod.Post))
                                         {

@@ -37,7 +37,7 @@
                                 <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="@Url.Action("Details", "Agente", new { cpf=m.CPF })" class="btn btn-outline-info rounded mr-3">Editar Agente</a>
+                                        <a href="@Url.Action("Edit", "Agente", new { cpf=m.CPF })" class="btn btn-outline-info rounded mr-3">Editar Agente</a>
 
                                         @using (Html.BeginForm("Del", "Funcionario", FormMethod.Post))
                                         {
