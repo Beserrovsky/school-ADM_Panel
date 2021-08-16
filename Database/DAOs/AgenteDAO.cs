@@ -113,7 +113,7 @@ namespace Database
 
             using (DB db = new DB()) 
             {
-                MySqlDataReader dr = db.RunAndRead("Select UF from Estado", new MySqlParameter[0]);
+                MySqlDataReader dr = db.RunAndRead("Select UF from Estado ORDER BY Estado.UF ASC", new MySqlParameter[0]);
 
                 if (dr.HasRows) 
                 {
