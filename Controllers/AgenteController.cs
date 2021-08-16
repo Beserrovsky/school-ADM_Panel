@@ -52,6 +52,7 @@ namespace FelipeB_App3BI.Controllers
             {
                 AgenteModel agente = agenteDAO.Get(cpf);
                 ViewBag.Editing = true;
+                ViewBag.Estados = new AgenteDAO().GetAllStates();
                 return View("AgenteForm", agente);
             }
             catch (Exception e)
@@ -65,7 +66,7 @@ namespace FelipeB_App3BI.Controllers
         {
 
             AgenteModel agente = new AgenteModel();
-
+            ViewBag.Estados = new AgenteDAO().GetAllStates();
             return View("AgenteForm", agente);
         }
 
@@ -75,7 +76,7 @@ namespace FelipeB_App3BI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid || !IsCpfValid(agente.CPF)) return View("AgenteForm", agente);
+                if (!ModelState.IsValid || !IsCpfValid(agente.CPF) || !IsStateValid(agente.Endereco.Estado)) return View("AgenteForm", agente);
                 new AgenteDAO().Save(agente);
                 return RedirectToAction("Index");
             }
@@ -112,10 +113,10 @@ namespace FelipeB_App3BI.Controllers
 
         // POST: Agente/CheckState/estado=string
         [HttpPost]
-        public JsonResult CheckState(string estado)
+        public JsonResult CheckState(Endereco endereco)
         {
 
-            return Json(IsStateValid(estado));
+            return Json(IsStateValid(endereco.Estado));
         }
 
         public static bool IsCpfValid(string cpf) 
@@ -155,7 +156,7 @@ namespace FelipeB_App3BI.Controllers
 
             if (state_uf == null || state_uf.Length != 2) return false;
 
-            return new AgenteDAO().GetAllStates().Any(s => s.Equals(state_uf));
+            return new AgenteDAO().GetAllStates().Any(s => s.ToLower().Equals(state_uf.ToLower()));
         }
 
     }
