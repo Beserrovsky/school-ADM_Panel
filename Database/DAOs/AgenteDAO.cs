@@ -140,12 +140,12 @@ namespace Database
                 MySqlDataReader dr = db.RunAndRead($"Select Endereco_ID from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
 
                 int endereco_id = -1;
-                bool created = false;
+                bool update = false;
 
                 if (dr.HasRows) 
                 {
-                    created = true;
                     while (dr.Read()) endereco_id = dr.IsDBNull(0)? -1 : dr.GetInt32(0);
+                    update = true;
                 }
 
                 dr.Close();
@@ -169,7 +169,19 @@ namespace Database
                 else
                 {
 
-                    endereco_id = Convert.ToInt32(db.ExecuteScalar("INSERT INTO Endereco(Logradouro, Cidade, Estado_UF, Numero) VALUES (@logradouro, @cidade, @estado_uf, @numero)", endereco_parameters));
+                    db.Run("INSERT INTO Endereco(Logradouro, Cidade, Estado_UF, Numero) VALUES (@logradouro, @cidade, @estado_uf, @numero)", endereco_parameters);
+
+                    dr = db.RunAndRead("SELECT MAX(ID) FROM Endereco", new MySqlParameter[0]);
+
+                    if (dr.HasRows) 
+                    {
+                        while (dr.Read()) 
+                        {
+                            endereco_id = dr.GetInt32(0);
+                        }
+                    }
+
+                    dr.Close();
                 }
 
                 MySqlParameter[] agente_parameters = new MySqlParameter[]
@@ -181,7 +193,7 @@ namespace Database
                 };
 
                 // Update Agente
-                if (created)
+                if (update)
                 {
 
                     db.Run($"UPDATE Agente SET Nome=@nome, Telefone=@telefone, Endereco_ID=@endereco_id WHERE CPF=@cpf", agente_parameters);
@@ -191,6 +203,21 @@ namespace Database
 
                     db.Run("INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID) VALUES (@cpf, @nome, @telefone, @endereco_id)", agente_parameters);
                 }
+
+                ClienteDAO clienteDAO = new ClienteDAO();
+
+                bool is_already_cliente = clienteDAO.Get(agente.CPF) != null;
+
+                if (agente.IsCliente && !is_already_cliente) new ClienteDAO().AddAgente(agente.CPF);
+                if (!agente.IsCliente && is_already_cliente) new ClienteDAO().DelAgente(agente.CPF);
+
+
+                FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+
+                bool is_already_funcionario = funcionarioDAO.Get(agente.CPF) != null;
+
+                if (agente.IsFuncionario && !is_already_funcionario) new FuncionarioDAO().AddAgente(agente.CPF);
+                if (!agente.IsFuncionario && is_already_funcionario) new FuncionarioDAO().DelAgente(agente.CPF);
             }
         }
 
