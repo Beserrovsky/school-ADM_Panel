@@ -17,6 +17,8 @@ namespace FelipeB_App3BI.Controllers
             ClienteDAO clienteDAO = new ClienteDAO();
             List<ClienteModel> clientes = clienteDAO.GetAll();
 
+            ViewBag.ClientesCount = clienteDAO.Count();
+
             return View("Clientes", clientes);
         }
 

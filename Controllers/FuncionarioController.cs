@@ -13,8 +13,11 @@ namespace FelipeB_App3BI.Controllers
         // GET: Funcionario
         public ActionResult Index()
         {
+
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             List<FuncionarioModel> funcionarios = funcionarioDAO.GetAll();
+
+            ViewBag.FuncionariosCount = funcionarioDAO.Count();
 
             return View("Funcionarios", funcionarios);
         }
