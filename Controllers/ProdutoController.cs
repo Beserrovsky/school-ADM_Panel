@@ -44,6 +44,7 @@ namespace FelipeB_App3BI.Controllers
             try
             {
                 ProdutoModel produto = new ProdutoDAO().Get(id);
+                ViewBag.Editing = true;
                 return View("ProdutoForm", produto);
             }
             catch (Exception e) 
