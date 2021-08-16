@@ -110,6 +110,14 @@ namespace FelipeB_App3BI.Controllers
             return Json(IsCpfValid(cpf));
         }
 
+        // POST: Agente/CheckState/estado=string
+        [HttpPost]
+        public JsonResult CheckState(string estado)
+        {
+
+            return Json(IsStateValid(estado));
+        }
+
         public static bool IsCpfValid(string cpf) 
         {
 
@@ -141,5 +149,14 @@ namespace FelipeB_App3BI.Controllers
 
             return true;
         }
+
+        public bool IsStateValid(string state_uf) 
+        {
+
+            if (state_uf == null || state_uf.Length != 2) return false;
+
+            return new AgenteDAO().GetAllStates().Any(s => s.Equals(state_uf));
+        }
+
     }
 }

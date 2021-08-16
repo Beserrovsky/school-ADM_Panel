@@ -14,6 +14,7 @@ namespace FelipeB_App3BI.Models
         public string CPF { get; set; }
 
         [Phone]
+        [MaxLength(11)]
         public string Telefone { get; set; }
 
         [Required]
@@ -28,12 +29,16 @@ namespace FelipeB_App3BI.Models
     public class Endereco 
     {
         [Required]
+        [MaxLength(100)]
         public string Logradouro { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Cidade { get; set; }
 
         [Required]
+        [MaxLength(2)]
+        [Remote("CheckState", "Agente", HttpMethod = "POST", ErrorMessage = "Insira um Estado válido!")]
         public string Estado { get; set; }
 
         [Required]

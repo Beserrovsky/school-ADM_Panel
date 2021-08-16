@@ -105,6 +105,33 @@ namespace Database
             return agente;
         }
 
+        public List<string> GetAllStates() 
+        {
+            List<string> states_uf = new List<string>() { "RO", "AC", "AM", "RR", "PA", "AP", "TO", "MA", "PI", "CE", "RN", "PB", "PE", "AL", "SE", "BA", "MG", "ES", "RJ", "SP", "PR", "SC", "RS", "MS", "MT", "GO", "DF" };
+
+            // just in case....
+
+            using (DB db = new DB()) 
+            {
+                MySqlDataReader dr = db.RunAndRead("Select UF from Estado", new MySqlParameter[0]);
+
+                if (dr.HasRows) 
+                {
+                    states_uf = new List<string>();
+
+                    while (dr.Read()) 
+                    {
+                        states_uf.Add(dr.GetString(0));
+                    }
+                }
+
+                dr.Close();
+
+            }
+
+            return states_uf;
+        }
+
         public void Save(AgenteModel agente)
         {
 
