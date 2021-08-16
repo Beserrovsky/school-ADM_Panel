@@ -14,6 +14,7 @@ namespace FelipeB_App3BI.Models
         public string CPF { get; set; }
 
         [Phone]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Apenas números para seu telefone!")]
         [MaxLength(11)]
         public string Telefone { get; set; }
 
