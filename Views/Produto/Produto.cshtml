@@ -7,7 +7,31 @@
 @{
     if (Model != null)
     {
-        <h2>Produto</h2>
-        <h3>@Model.Nome</h3>
+        <div class="card">
+            <div class="card-header">
+                <h2>@Model.Nome</h2>
+                <h6 class="text-muted font-italic">@Html.DisplayNameFor(model => model.ID):&nbsp;@Model.ID</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Nome):&nbsp;</p><p>@Model.Nome</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Valor):&nbsp;</p><p>@Model.Valor</p>
+                </div>
+                <div class="d-flex">
+                    <p class="font-weight-bold">@Html.DisplayNameFor(model => model.Quantidade):&nbsp;</p><p>@Model.Quantidade</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex rounded bg-danger justify-content-center align-items-center" style="height:75vh; width:100%;">
+            <div>
+                <h1 class="display-1 text-white text-center">404</h1>
+                <h2 class="text-white lead">Produto não encontrado!</h2>
+            </div>
+        </div>
     }
 }
