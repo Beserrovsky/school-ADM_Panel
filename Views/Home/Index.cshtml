@@ -3,16 +3,16 @@
     ViewBag.ActiveIndex = 0;
 }
 
-<h1 class="display-1 row mb-5 d-flex justify-content-center">Bem vindo!</h1>
+<h1 class="display-1 row mb-5 mt-5 d-flex justify-content-center">Bem vindo!</h1>
 
 <div class="row shadow mb-5" style="height:50vh;">
-    <a href="#Tutorial" class="col-4 bg-dark rounded-left d-flex text-white justify-content-center align-items-center display-4 link">
+    <a href="#Tutorial" class="col-4 bg-dark rounded-left d-flex text-white justify-content-center align-items-center display-4 link border border-right-0">
         Tutorial
     </a>
-    <a href="#Creditos" class="col-4 bg-light d-flex text-dark justify-content-center align-items-center display-4 link">
+    <a href="#Creditos" class="col-4 bg-light d-flex text-dark justify-content-center align-items-center display-4 link border-top border-bottom">
         Créditos
     </a>
-    <a href="https://github.com/Beserrovsky/school-ADM_PANEL" class="col-4 bg-dark rounded-right d-flex text-white justify-content-center align-items-center display-4 link">
+    <a href="https://github.com/Beserrovsky/school-ADM_PANEL" class="col-4 bg-dark rounded-right d-flex text-white justify-content-center align-items-center display-4 link border border-left-0">
         Código
     </a>
 </div>
@@ -23,6 +23,29 @@
             <h1>Tutorial</h1>
         </div>
         <div class="col-12 py-5">
+            <section>
+                <h4>Introdução</h4>
+                <p>Bem vindo a minha aplicação, nela você pode cadastrar, atualizar, ler e deletar registros de Clientes, Funcionários e Produtos.</p>
+            </section>
+            <section>
+                <h4>Agentes</h4>
+                <p>Você verá o termo Agente bastante aqui, e não é o 007 não, o Agente referido é um cadastro extra que existe para, principalmente, manter os dados sincronizados entre Clientes e Funcionários, assim como evitar registros duplicados.</p>
+                <p>Todo Funcionário ou Cliente aponta para um Agente, portanto, caso queira adicionar um funcionário, é feito o registro de um Agente e depois ele é definido com seu cargo.</p>
+            </section>
+            <section>
+                <h4>Clientes e Funcionários</h4>
+                <p></p>
+                <p>Pela aplicação você encontrará várias vezes os emojis 🧔 e 👷‍♂️, pois foram escolhidos para representarem os Clientes e Funcionários, respectivamente.</p>
+                <p>Para criar seu primeiro Cliente, navegue pela navbar até Painel ou Clientes, e então, encontre o botão Verde de criação, lá você será apresentado a um formulário, caso esqueça de definir o Agente como Cliente, não se apavore, vá para Painel e encontre o registro na tabela de Agentes, então, selecione o ícone de Cliente, e pronto!</p>
+                <p>Isso deve te dar a noção principal de navegabilidade pelo site!</p>
+                <p class="text-danger">Atenção! Caso queira DELETAR um registro de Agente, primeiro entre em EDITAR e então, no topo da página, existe o botão de deletar!</p>
+            </section>
+            <section>
+                <h4>Produtos</h4>
+                <p>Para os produtos, o modelo é mais ou menos o mesmo!</p>
+                <p>Importante ressaltar que o botão de EXCLUIR nos Produtos faz a ação de DELETAR, ainda exite o botão de deletar no menu editar, porém, por facilidade, ele está ali também. Isso quer dizer que:</p>
+                <p class="text-danger">O botão EXCLUIR na lista de Produtos é uma ação irreversível! Assim como deletar um Agente em seu menu Editar!</p>
+            </section>
         </div>
     </div>
 </section>
@@ -33,6 +56,7 @@
             <h1>Créditos</h1>
         </div>
         <div class="col-12 py-5">
+            <h4 class="text-center">Este programa foi desenvolvido por <a href="https://github.com/Beserrovsky">Felipe Beserra</a>!</h4>
         </div>
     </div>
 </section>
