@@ -38,7 +38,7 @@ CREATE TABLE Funcionario(
 CREATE TABLE Produto(
 	ID int primary key auto_increment,
     Nome varchar(50),
-    Valor decimal,
+    Valor decimal(10,2),
     Quantidade int
 );
 
