@@ -93,6 +93,21 @@ namespace Database
             }
         }
 
+        public bool Exists(string ID)
+        {
+            bool exists = false;
+
+            using (DB db = new DB())
+            {
+                MySqlDataReader dr = db.RunAndRead("Select * from Produto where Produto.ID=@id", new MySqlParameter[] { new MySqlParameter("@id", ID) });
+
+                exists = dr.HasRows;
+            }
+
+            return exists;
+        }
+
+
         public void Delete(int id)
         {
             using (DB db = new DB())
