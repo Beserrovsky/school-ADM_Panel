@@ -10,7 +10,7 @@ namespace FelipeB_App3BI.Models
         public string Nome { get; set; }
 
         [Required]
-        [Remote("CheckCpf", "Agente", HttpMethod = "POST", ErrorMessage = "Insira um CPF válido!")]
+        [Remote("CheckCpf", "Agente", HttpMethod = "POST")]
         public string CPF { get; set; }
 
         [Phone]

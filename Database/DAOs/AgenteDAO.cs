@@ -221,6 +221,20 @@ namespace Database
             }
         }
 
+        public bool Exists(string cpf) 
+        {
+            bool exists = false;
+
+            using (DB db = new DB()) 
+            {
+                MySqlDataReader dr = db.RunAndRead("Select * from Agente where Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("@cpf", cpf) });
+
+                exists = dr.HasRows;
+            }
+
+            return exists;
+        }
+
         public void Delete(string cpf) 
         {
             using (DB db = new DB())

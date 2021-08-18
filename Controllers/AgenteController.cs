@@ -76,7 +76,8 @@ namespace FelipeB_App3BI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid || !IsCpfValid(agente.CPF) || !IsStateValid(agente.Endereco.Estado)) return View("AgenteForm", agente);
+                if (!ModelState.IsValid || !IsCpfValid(agente.CPF) || !IsStateValid(agente.Endereco.Estado) || !new AgenteDAO().Exists(agente.CPF)) return View("AgenteForm", agente);
+
                 new AgenteDAO().Save(agente);
                 return RedirectToAction("Index");
             }
@@ -108,7 +109,11 @@ namespace FelipeB_App3BI.Controllers
         public JsonResult CheckCpf(string cpf) 
         {
 
-            return Json(IsCpfValid(cpf));
+            if (!IsCpfValid(cpf)) return Json("Insira um CPF válido!", JsonRequestBehavior.AllowGet);
+
+            if (new AgenteDAO().Exists(cpf)) return Json("CPF já cadastrado", JsonRequestBehavior.AllowGet);
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Agente/CheckState/estado=string
