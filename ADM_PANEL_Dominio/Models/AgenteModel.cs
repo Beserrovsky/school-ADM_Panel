@@ -15,7 +15,7 @@ namespace FelipeB_App3BI.Models
 
         [Phone]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Apenas números para seu telefone!")]
-        [MaxLength(11)]
+        [StringLength(11, MinimumLength = 10, ErrorMessage = "Não se esqueça do DDD!")]
         public string Telefone { get; set; }
 
         [Required]
