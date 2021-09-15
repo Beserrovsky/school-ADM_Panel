@@ -5,18 +5,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FelipeB_App3BI.Util;
 
 namespace FelipeB_App3BI.Controllers
 {
     public class AgenteController : Controller
     {
-        public ActionResult Get()
+        public ActionResult Index()
         {
             ViewBag.ClientesCount = Context.Count<Cliente>();
 
             ViewBag.FuncionariosCount = Context.Count<Funcionario>();
 
-            return View("Dashboard", new AgenteDAO().Get());
+            IEnumerable<Agente> agentes = Context.Get<Agente>();
+
+            foreach (var agente in agentes) 
+            {
+                agente.CPF = Masker.MaskCpf(agente.CPF);
+                agente.Telefone = Masker.MaskTelephone(agente.Telefone);
+            }
+
+            return View(agentes);
         }
 
         /*

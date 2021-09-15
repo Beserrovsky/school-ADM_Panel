@@ -7,16 +7,31 @@ using System.Web;
 
 namespace Database
 {
+    public class Query<T>
+    {
+        public Query(string condition, T obj)
+        {
+            Condition = condition;
+            Object = obj;
+        }
+
+        public string Condition { get; set; }
+        public T Object { get; set; }
+    }
+
     public class Context
     {
-        public static IEnumerable<T> Get<T>(string condition=null) where T : new()
+        public static IEnumerable<T> Get<T>(Query<T> query = null) where T : new()
         {
             Type type = typeof(T);
             List<T> result = new List<T>();
 
             using (Database db = new Database())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select * from {type.Name} {condition ?? ""}", type);
+                MySqlDataReader dr;
+
+                if (query == null) dr = db.RunAndRead($"Select * from {type.Name}");
+                else dr = db.RunAndRead($"Select * from {type.Name} {query.Condition ?? ""}", query.Object);
 
                 var props = type.GetProperties();
 
@@ -42,7 +57,7 @@ namespace Database
 
             return result;
         }
-
+        /*
         public static T Patch<T>(string condition, T obj) where T : new()
         {
             using (Database db = new Database())
@@ -105,15 +120,15 @@ namespace Database
 
                 dr.Close();
             }
-
-            public static int Count<T>(string condition = null) where T : new()
+        */
+        public static int Count<T>() where T : new()
         {
             Type type = typeof(T);
             int result = 0;
 
             using (Database db = new Database())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from {type.Name} {condition ?? ""}", type);
+                MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from {type.Name}");
 
                 var props = type.GetProperties();
 

@@ -10,6 +10,7 @@ namespace FelipeB_App3BI.Controllers
 {
     public class ProdutoController : Controller
     {
+        /*
         public ActionResult Index()
         {
 
@@ -95,5 +96,6 @@ namespace FelipeB_App3BI.Controllers
                 return View("Error", e);
             }
         }
+        */
     }
 }

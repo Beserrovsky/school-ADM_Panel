@@ -2,7 +2,7 @@
 
 namespace FelipeB_App3BI.Models
 {
-    public class ProdutoModel
+    public class Produto
     {
         public int ID { get; set; } = 0;
         [Required]

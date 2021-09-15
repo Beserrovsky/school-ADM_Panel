@@ -165,10 +165,6 @@
     <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
-    <Compile Include="Database\DAOs\AgenteDAO.cs" />
-    <Compile Include="Database\DAOs\ClienteDAO.cs" />
-    <Compile Include="Database\DAOs\FuncionarioDAO.cs" />
-    <Compile Include="Database\DAOs\ProdutoDAO.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -177,8 +173,9 @@
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\DTOs\AgenteDTO.cs" />
     <Compile Include="Models\Funcionario.cs" />
-    <Compile Include="Models\ProdutoModel.cs" />
+    <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Getter.cs" />
     <Compile Include="Util\Masker.cs" />
     <Compile Include="Database\Context.cs" />
     <Compile Include="Util\Validator.cs" />
@@ -323,13 +320,12 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Funcionario\Funcionarios.cshtml" />
     <Content Include="Views\Cliente\Clientes.cshtml" />
-    <Content Include="Views\Agente\Dashboard.cshtml" />
+    <Content Include="Views\Agente\Index.cshtml" />
     <Content Include="Views\Produto\Produtos.cshtml" />
     <Content Include="Views\Agente\Agente.cshtml" />
     <Content Include="Views\Produto\Produto.cshtml" />
     <Content Include="Views\Agente\AgenteForm.cshtml" />
     <Content Include="Views\Produto\ProdutoForm.cshtml" />
-    <Content Include="Views\Shared\_Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

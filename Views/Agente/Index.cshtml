@@ -42,7 +42,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(model => model.Nome)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(model => model.CPF)</th>
                         <th scope="col" class="border-top-0">@Html.DisplayNameFor(model => model.Nome)</th>
                         <th scope="col" class="border-top-0">@Html.DisplayNameFor(model => model.Telefone)</th>
                         <th scope="col" class="border-top-0">@Html.DisplayNameFor(model => model.Endereco.Cidade)</th>
@@ -87,18 +87,6 @@
                     }
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 card rounded link px-0 shadow">
-        <div class="card-header text-center">
-            <h1>Agentes</h1>
-
-            <span class="font-italic">Quantidade cadastrados: @Model.Count().ToString()</span>
-        </div>
-        <div class="card-body">
-            @Html.Partial("_Table", Model)
         </div>
     </div>
 </div>
