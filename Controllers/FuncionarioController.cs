@@ -10,12 +10,13 @@ namespace FelipeB_App3BI.Controllers
 {
     public class FuncionarioController : Controller
     {
+        /*
         // GET: Funcionario
         public ActionResult Index()
         {
 
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-            List<FuncionarioModel> funcionarios = funcionarioDAO.GetAll();
+            List<Funcionario> funcionarios = funcionarioDAO.GetAll();
 
             ViewBag.FuncionariosCount = funcionarioDAO.Count();
 
@@ -45,5 +46,6 @@ namespace FelipeB_App3BI.Controllers
 
             return RedirectToAction("Index", "Agente");
         }
+        */
     }
 }

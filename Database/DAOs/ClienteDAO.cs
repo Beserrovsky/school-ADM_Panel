@@ -7,12 +7,12 @@ namespace Database
 {
     public class ClienteDAO
     {
-
-        public List<ClienteModel> GetAll()
+        /*
+        public List<Cliente> GetAll()
         {
-            List<ClienteModel> clientes = new List<ClienteModel>();
+            List<Cliente> clientes = new List<Cliente>();
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from clientes_view", new MySqlParameter[0]);
 
@@ -20,7 +20,7 @@ namespace Database
                 {
                     while (dr.Read())
                     {
-                        clientes.Add(new ClienteModel() 
+                        clientes.Add(new Cliente() 
                         { 
                             CPF = dr.GetString(0),
                             Nome = dr.GetString(1),
@@ -46,7 +46,7 @@ namespace Database
         {
             int clientes_count = 0;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from clientes_view", new MySqlParameter[0]);
 
@@ -64,11 +64,11 @@ namespace Database
             return clientes_count;
         }
 
-        public ClienteModel Get(string cpf)
+        public Cliente Get(string cpf)
         {
-            ClienteModel cliente = null;
+            Cliente cliente = null;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -76,7 +76,7 @@ namespace Database
                 {
                     while (dr.Read())
                     {
-                        cliente = new ClienteModel()
+                        cliente = new Cliente()
                         {
                             CPF = dr.GetString(0),
                             Nome = dr.GetString(1),
@@ -100,7 +100,7 @@ namespace Database
 
         public void AddAgente(string cpf) 
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -124,7 +124,7 @@ namespace Database
 
         public void DelAgente(string cpf)
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
 
                 MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
@@ -146,5 +146,6 @@ namespace Database
                 db.Run($"DELETE FROM Cliente WHERE Cliente.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
+        */
     }
 }

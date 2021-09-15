@@ -10,23 +10,16 @@ namespace FelipeB_App3BI.Controllers
 {
     public class AgenteController : Controller
     {
-
-        public ActionResult Index()
+        public ActionResult Get()
         {
+            ViewBag.ClientesCount = Context.Count<Cliente>();
 
-            AgenteDAO agenteDAO = new AgenteDAO();
+            ViewBag.FuncionariosCount = Context.Count<Funcionario>();
 
-            ViewBag.AgentesCount = agenteDAO.Count();
-
-            ViewBag.ClientesCount = new ClienteDAO().Count();
-
-            ViewBag.FuncionariosCount = new FuncionarioDAO().Count();
-
-            List<AgenteModel> agentes = agenteDAO.GetAll();
-
-            return View("Dashboard", agentes);
+            return View("Dashboard", new AgenteDAO().Get());
         }
 
+        /*
         // GET: Agente/cpf=?
         public ActionResult Details(string cpf)
         {
@@ -34,7 +27,7 @@ namespace FelipeB_App3BI.Controllers
 
             try
             {
-                AgenteModel agente = agenteDAO.Get(cpf);
+                Agente agente = agenteDAO.Get(cpf);
                 return View("Agente", agente);
             }
             catch (Exception e)
@@ -50,7 +43,7 @@ namespace FelipeB_App3BI.Controllers
 
             try
             {
-                AgenteModel agente = agenteDAO.Get(cpf);
+                Agente agente = agenteDAO.Get(cpf);
                 ViewBag.Editing = true;
                 ViewBag.Estados = new AgenteDAO().GetAllStates();
                 return View("AgenteForm", agente);
@@ -65,14 +58,14 @@ namespace FelipeB_App3BI.Controllers
         public ActionResult Create()
         {
 
-            AgenteModel agente = new AgenteModel();
+            Agente agente = new Agente();
             ViewBag.Estados = new AgenteDAO().GetAllStates();
             return View("AgenteForm", agente);
         }
 
         // POST: Agente/Save
         [HttpPost]
-        public ActionResult Save(AgenteModel agente)
+        public ActionResult Save(Agente agente)
         {
             try
             {
@@ -124,37 +117,7 @@ namespace FelipeB_App3BI.Controllers
             return Json(IsStateValid(endereco.Estado));
         }
 
-        public static bool IsCpfValid(string cpf) 
-        {
 
-            if (cpf==null || cpf.Length != 11) return false; // Verifica se Array está mal formatado
-
-            int[] cpf_arr = new int[11];
-            for (int i = 0; i < cpf.Length; i++)
-                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[i])) return false; // Converte de String para int[] e retorna falso caso não seja um número
-
-            int sum = 0;
-
-            for (int i = 10; i >= 2; i--) { // Multiplica os 9 primeiros números pela seqência decrescente de 10 a 2
-                sum += cpf_arr[10 - i] * i;
-            }
-
-            double mod = (sum * 10 ) % 11;
-
-            if (mod != cpf_arr[9]) return false; // Verfica se o resto da soma anterior quando multipliacada por 10 e dividida por 11 é igual ao primeiro digito da confirmação
-
-            sum = 0;
-
-            for (int i = 11; i >= 2; i--){ // Multiplica os 10 primeiros números pela seqência decrescente de 11 a 2
-                sum += cpf_arr[11 - i] * i;
-            }
-
-            mod = (sum * 10) % 11;
-
-            if (mod != cpf_arr[10]) return false; // Repete a etapa de verificação, mas para o segundo digito
-
-            return true;
-        }
 
         public bool IsStateValid(string state_uf) 
         {
@@ -163,6 +126,8 @@ namespace FelipeB_App3BI.Controllers
 
             return new AgenteDAO().GetAllStates().Any(s => s.ToLower().Equals(state_uf.ToLower()));
         }
+
+        */
 
     }
 }

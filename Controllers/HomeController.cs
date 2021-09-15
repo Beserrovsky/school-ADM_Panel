@@ -1,4 +1,6 @@
-﻿using FelipeB_App3BI.Util;
+﻿using Database;
+using FelipeB_App3BI.Models;
+using FelipeB_App3BI.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

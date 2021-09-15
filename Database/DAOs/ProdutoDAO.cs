@@ -13,7 +13,7 @@ namespace Database
 
             List<ProdutoModel> produtos = new List<ProdutoModel>();
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
                 MySqlDataReader dr = db.RunAndRead("Select * from Produto", new MySqlParameter[0]);
 
@@ -42,7 +42,7 @@ namespace Database
 
             ProdutoModel produto = null;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead("Select * from Produto WHERE Produto.ID=@id", new MySqlParameter[] { new MySqlParameter("id", id) });
 
@@ -68,7 +68,7 @@ namespace Database
 
         public void Save(ProdutoModel produto) 
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
 
                 bool update = false;
@@ -97,7 +97,7 @@ namespace Database
         {
             bool exists = false;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead("Select * from Produto where Produto.ID=@id", new MySqlParameter[] { new MySqlParameter("@id", ID) });
 
@@ -110,7 +110,7 @@ namespace Database
 
         public void Delete(int id)
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
 
                 MySqlDataReader dr = db.RunAndRead($"Select * from Produto WHERE Produto.ID=@id", new MySqlParameter[] { new MySqlParameter("id", id) });

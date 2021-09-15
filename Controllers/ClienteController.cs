@@ -10,12 +10,13 @@ namespace FelipeB_App3BI.Controllers
 {
     public class ClienteController : Controller
     {
+        /*
         // GET: Cliente
         public ActionResult Index()
         {
 
             ClienteDAO clienteDAO = new ClienteDAO();
-            List<ClienteModel> clientes = clienteDAO.GetAll();
+            List<Cliente> clientes = clienteDAO.GetAll();
 
             ViewBag.ClientesCount = clienteDAO.Count();
 
@@ -45,5 +46,6 @@ namespace FelipeB_App3BI.Controllers
 
             return RedirectToAction("Index", "Agente");
         }
+        */
     }
 }

@@ -6,12 +6,12 @@ namespace Database
 {
     public class FuncionarioDAO
     {
-
-        public List<FuncionarioModel> GetAll()
+        /*
+        public List<Funcionario> GetAll()
         {
-            List<FuncionarioModel> funcionarios = new List<FuncionarioModel>();
+            List<Funcionario> funcionarios = new List<Funcionario>();
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view", new MySqlParameter[0]);
 
@@ -19,7 +19,7 @@ namespace Database
                 {
                     while (dr.Read())
                     {
-                        funcionarios.Add(new FuncionarioModel()
+                        funcionarios.Add(new Funcionario()
                         {
                             CPF = dr.GetString(0),
                             Nome = dr.GetString(1),
@@ -45,7 +45,7 @@ namespace Database
         {
             int funcionarios_count = 0;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from funcionarios_view", new MySqlParameter[0]);
 
@@ -63,11 +63,11 @@ namespace Database
             return funcionarios_count;
         }
 
-        public FuncionarioModel Get(string cpf)
+        public Funcionario Get(string cpf)
         {
-            FuncionarioModel funcionario = null;
+            Funcionario funcionario = null;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -75,7 +75,7 @@ namespace Database
                 {
                     while (dr.Read())
                     {
-                        funcionario = new FuncionarioModel()
+                        funcionario = new Funcionario()
                         {
                             CPF = dr.GetString(0),
                             Nome = dr.GetString(1),
@@ -99,7 +99,7 @@ namespace Database
 
         public void AddAgente(string cpf)
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -115,7 +115,7 @@ namespace Database
 
         public void DelAgente(string cpf)
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -128,5 +128,6 @@ namespace Database
                 db.Run($"DELETE FROM Funcionario WHERE Funcionario.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
+        */
     }
 }

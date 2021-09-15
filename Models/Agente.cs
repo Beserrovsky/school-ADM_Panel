@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace FelipeB_App3BI.Models
 {
-    public class AgenteModel
+    public class Agente
     {
         [Required]
         [MaxLength(50)]
@@ -21,20 +21,27 @@ namespace FelipeB_App3BI.Models
         [Required]
         public Endereco Endereco { get; set; }
 
-        public bool IsCliente { get; set; }
+        public string ClienteId { get; set; }
 
-        public bool IsFuncionario { get; set; }
+        public Cliente Cliente { get; set; }
+
+        public string FuncionarioId { get; set; }
+
+        public Funcionario Funcionario { get; set; }
 
     }
 
     public class Endereco 
     {
+
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Logradouro { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(75)]
         public string Cidade { get; set; }
 
         [Required]
@@ -44,5 +51,14 @@ namespace FelipeB_App3BI.Models
 
         [Required]
         public int Numero { get; set; }
+
+    }
+
+    class Estado
+    {
+        public string UF { get; set; }
+
+        public string Nome { get; set; }
+
     }
 }

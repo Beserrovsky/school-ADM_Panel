@@ -8,53 +8,22 @@ namespace Database
     public class AgenteDAO
     {
 
-        public List<AgenteModel> GetAll() 
+        public IEnumerable<Agente> Get() 
         {
-            List<AgenteModel> agentes = new List<AgenteModel>();
-
-            using (DB db = new DB())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from agentes_types_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        AgenteModel agente = new AgenteModel()
-                        {
-                            CPF = dr.GetString(0),
-                            Nome = dr.GetString(1),
-                            Telefone = dr.GetString(2),
-                            Endereco = new Endereco()
-                            {
-                                Logradouro = dr.GetString(3),
-                                Numero = dr.GetInt32(4),
-                                Cidade = dr.GetString(5),
-                                Estado = dr.GetString(6),
-                            },
-                            IsCliente = dr.GetInt32(7) == 1,
-                            IsFuncionario = dr.GetInt32(8) == 1
-                        };
-
-                        agentes.Add(agente);
-                    }
-                }
-
-                dr.Close();
-            }
-
-            return agentes;
+            return Context.Get<Agente>();
         }
+
+        /*
 
         public int Count()
         {
 
             int agentes_count = 0;
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
 
-                MySqlDataReader dr = db.RunAndRead("Select COUNT(*) from Agente", new MySqlParameter[0]);
+                MySqlDataReader dr = db.RunAndRead("Select COUNT(*) from Agente");
 
                 if (dr.HasRows)
                 {
@@ -64,16 +33,18 @@ namespace Database
                     }
                 }
 
+                dr.Close();
+
             }
 
             return agentes_count;
         }
 
-        public AgenteModel Get(string cpf)
+        public Agente Get(string cpf)
         {
-            AgenteModel agente = null;
+            Agente agente = null;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from agentes_types_view WHERE agentes_types_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -81,7 +52,7 @@ namespace Database
                 {
                     while (dr.Read())
                     {
-                        agente = new AgenteModel()
+                        agente = new Agente()
                         {
                             CPF = dr.GetString(0),
                             Nome = dr.GetString(1),
@@ -111,7 +82,7 @@ namespace Database
 
             // just in case....
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
                 MySqlDataReader dr = db.RunAndRead("Select UF from Estado ORDER BY Estado.UF ASC", new MySqlParameter[0]);
 
@@ -132,12 +103,12 @@ namespace Database
             return states_uf;
         }
 
-        public void Save(AgenteModel agente)
+        public void Save(Agente agente)
         {
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
-                MySqlDataReader dr = db.RunAndRead($"Select Endereco_ID from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
+                MySqlDataReader dr = db.RunAndRead($"Select Endereco_ID from Agente WHERE Agente.CPF=@cpf", agente);
 
                 int endereco_id = -1;
                 bool update = false;
@@ -150,26 +121,16 @@ namespace Database
 
                 dr.Close();
 
-                MySqlParameter[] endereco_parameters = new MySqlParameter[]
-                {
-                    new MySqlParameter("ID", endereco_id),
-                    new MySqlParameter("logradouro", agente.Endereco.Logradouro),
-                    new MySqlParameter("cidade", agente.Endereco.Cidade),
-                    new MySqlParameter("estado_uf", agente.Endereco.Estado),
-                    new MySqlParameter("numero", agente.Endereco.Numero),
-                };
-
-
                 // Update Endereco
                 if (endereco_id!=-1) // Endereco já criado
                 {
 
-                    db.Run($"UPDATE Endereco SET Logradouro=@logradouro, Cidade=@cidade, Estado_UF=@estado_uf, Numero=@numero WHERE ID=@ID", endereco_parameters);
+                    db.Run($"UPDATE Endereco SET Logradouro=@logradouro, Cidade=@cidade, Estado_UF=@estado_uf, Numero=@numero WHERE ID=@ID", agente.Endereco);
                 }
                 else
                 {
 
-                    db.Run("INSERT INTO Endereco(Logradouro, Cidade, Estado_UF, Numero) VALUES (@logradouro, @cidade, @estado_uf, @numero)", endereco_parameters);
+                    db.Run("INSERT INTO Endereco(Logradouro, Cidade, Estado_UF, Numero) VALUES (@logradouro, @cidade, @estado_uf, @numero)", agente.Endereco);
 
                     dr = db.RunAndRead("SELECT MAX(ID) FROM Endereco", new MySqlParameter[0]);
 
@@ -184,24 +145,16 @@ namespace Database
                     dr.Close();
                 }
 
-                MySqlParameter[] agente_parameters = new MySqlParameter[]
-                {
-                    new MySqlParameter("cpf", agente.CPF),
-                    new MySqlParameter("nome", agente.Nome),
-                    new MySqlParameter("telefone", agente.Telefone),
-                    new MySqlParameter("endereco_id", endereco_id)
-                };
-
                 // Update Agente
                 if (update)
                 {
 
-                    db.Run($"UPDATE Agente SET Nome=@nome, Telefone=@telefone, Endereco_ID=@endereco_id WHERE CPF=@cpf", agente_parameters);
+                    db.Run($"UPDATE Agente SET Nome=@nome, Telefone=@telefone, Endereco_ID=@endereco_id WHERE CPF=@cpf", agente);
                 }
                 else
                 {
 
-                    db.Run("INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID) VALUES (@cpf, @nome, @telefone, @endereco_id)", agente_parameters);
+                    db.Run("INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID) VALUES (@cpf, @nome, @telefone, @endereco_id)", agente);
                 }
 
                 ClienteDAO clienteDAO = new ClienteDAO();
@@ -225,7 +178,7 @@ namespace Database
         {
             bool exists = false;
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
                 MySqlDataReader dr = db.RunAndRead("Select * from Agente where Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("@cpf", cpf) });
 
@@ -237,7 +190,7 @@ namespace Database
 
         public void Delete(string cpf) 
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
 
                 MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
@@ -253,6 +206,6 @@ namespace Database
                 db.Run($"DELETE FROM Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
             }
         }
-
+        */
     }
 }
