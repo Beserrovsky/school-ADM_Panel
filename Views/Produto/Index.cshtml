@@ -1,4 +1,4 @@
-﻿@model List<FelipeB_App3BI.Models.ProdutoModel>
+﻿@model IEnumerable<FelipeB_App3BI.Models.ProdutoModel>
 @{
     ViewBag.Title = "Produtos";
     ViewBag.ActiveIndex = 2;
@@ -13,11 +13,11 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].ID)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Valor)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Quantidade)</th>
-                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Create")">+ Criar novo</a></div></th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.ID)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Nome)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Valor)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Quantidade)</th>
+                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Form")">+ Criar novo</a></div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                                 <td>@m.Quantidade</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a href="@Url.Action("Edit", new { id=m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
+                                        <a href="@Url.Action("Form", new { id = m.ID })" class="btn btn-outline-info rounded mr-3">Editar</a>
 
                                         @using (Html.BeginForm("Delete", "Produto", FormMethod.Post))
                                         {

@@ -4,6 +4,7 @@ namespace FelipeB_App3BI.Models
 {
     public class ProdutoModel : Model
     {
+
         public int ID { get; set; }
 
         [Required]

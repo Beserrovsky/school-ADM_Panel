@@ -5,6 +5,7 @@ namespace FelipeB_App3BI.Models
 {
     public class AgenteModel : Model
     {
+
         [Required]
         [MaxLength(50)]
         public string Nome { get; set; }

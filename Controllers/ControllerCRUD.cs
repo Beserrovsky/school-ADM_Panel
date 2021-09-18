@@ -31,10 +31,11 @@ namespace FelipeB_App3BI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(M model) {
+        public ActionResult Details(string ID) {
+            M model = null;
             try
             {
-                if (model != null) model = this.DAO.Get(model);
+                if (ID != null) model = this.DAO.Get(ID);
             }
             catch (Exception e)
             {
@@ -44,10 +45,11 @@ namespace FelipeB_App3BI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Form(M model = null) {
+        public ActionResult Form(string ID = null) {
+            M model = null;
             try
             {
-                if(model != null) model = this.DAO.Get(model);
+                if(ID != null) model = this.DAO.Get(ID);
             }
             catch (Exception e)
             {
@@ -61,7 +63,8 @@ namespace FelipeB_App3BI.Controllers
             try
             {
                 if (!ModelState.IsValid || !model.Validate()) return View("Form", model);
-                DAO.Post(model);
+                if (DAO.Exists(model)) DAO.Patch(model);
+                else DAO.Post(model);
             }
             catch (Exception e)
             {
@@ -70,26 +73,12 @@ namespace FelipeB_App3BI.Controllers
             return RedirectToAction("Details", model);
         }
 
-        [HttpPatch]
-        public ActionResult Patch(M model) {
+        [HttpPost]
+        public ActionResult Delete(string ID) {
             try
             {
-                if (!ModelState.IsValid || !model.Validate()) return View("Form", model);
-                DAO.Patch(model);
-            }
-            catch (Exception e)
-            {
-                return View("Error", e);
-            }
-            return RedirectToAction("Details", model);
-        }
-
-        [HttpDelete]
-        public ActionResult Delete(M model) {
-            try
-            {
-                if (!DAO.Exists(model)) throw new Exception("Item não existe!");
-                DAO.Delete(model);
+                if (!DAO.Exists(ID)) throw new Exception("Item não existe!");
+                DAO.Delete(ID);
             }
             catch (Exception e) {
                 return View("Error", e);

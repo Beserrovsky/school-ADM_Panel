@@ -144,9 +144,26 @@ namespace FelipeB_App3BI.DB
             }
         }
 
-        public override ProdutoModel Get(ProdutoModel item)
+        public override ProdutoModel Get(string ID)
         {
-            throw new NotImplementedException();
+            using (Database db = new Database())
+            {
+                ProdutoModel produto = null;
+
+                MySqlDataReader dr = db.RunAndRead("SELECT * FROM produto WHERE id = @id", GetIDParameter(ID));
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        produto = ReadRecord(dr);
+                    }
+                }
+
+                dr.Close();
+
+                return produto;
+            }
         }
 
         public override ProdutoModel Patch(ProdutoModel item)
@@ -159,12 +176,17 @@ namespace FelipeB_App3BI.DB
             throw new NotImplementedException();
         }
 
-        public override ProdutoModel Delete(ProdutoModel item)
+        public override ProdutoModel Delete(string ID)
         {
             throw new NotImplementedException();
         }
 
         public override bool Exists(ProdutoModel item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Exists(string ID)
         {
             throw new NotImplementedException();
         }
@@ -177,6 +199,10 @@ namespace FelipeB_App3BI.DB
                 new MySqlParameter("valor", item.Valor),
                 new MySqlParameter("quantidade", item.Quantidade)
             };
+        }
+
+        protected override MySqlParameter[] GetIDParameter(string ID) {
+            return new MySqlParameter[] { new MySqlParameter("id", ID) };
         }
 
         protected override ProdutoModel ReadRecord(MySqlDataReader dr)
