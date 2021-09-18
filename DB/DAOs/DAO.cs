@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FelipeB_App3BI.DB
 {
-    abstract class DAO <T>
+    public abstract class DAO <T>
     {
         public abstract T Get();
         public abstract T Get(T item);

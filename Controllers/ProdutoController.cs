@@ -10,6 +10,12 @@ namespace FelipeB_App3BI.Controllers
 {
     public class ProdutoController : Controller
     {
+
+        private readonly ProdutoDAO DAO;
+
+        public ProdutoController() { this.DAO = new ProdutoDAO(); }
+
+
         public ActionResult Index()
         {
 
