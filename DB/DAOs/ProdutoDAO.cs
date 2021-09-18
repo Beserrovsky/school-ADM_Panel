@@ -127,7 +127,21 @@ namespace FelipeB_App3BI.DB
 
         public override IEnumerable<ProdutoModel> Get()
         {
-            throw new NotImplementedException();
+            using (Database db = new Database()) {
+                List<ProdutoModel> produtos = new List<ProdutoModel>();
+
+                MySqlDataReader dr = db.RunAndRead("SELECT * FROM produto", new MySqlParameter[0]);
+
+                if (dr.HasRows) {
+                    while (dr.Read()) {
+                        produtos.Add(ReadRecord(dr));
+                    }
+                }
+
+                dr.Close();
+
+                return produtos;
+            }
         }
 
         public override ProdutoModel Get(ProdutoModel item)
@@ -155,9 +169,26 @@ namespace FelipeB_App3BI.DB
             throw new NotImplementedException();
         }
 
-        protected override MySqlParameter[] GetParameters()
+        protected override MySqlParameter[] GetParameters(ProdutoModel item)
         {
-            throw new NotImplementedException();
+            return new MySqlParameter[] {
+                new MySqlParameter("id", item.ID),
+                new MySqlParameter("nome", item.Nome),
+                new MySqlParameter("valor", item.Valor),
+                new MySqlParameter("quantidade", item.Quantidade)
+            };
+        }
+
+        protected override ProdutoModel ReadRecord(MySqlDataReader dr)
+        {
+            ProdutoModel p = new ProdutoModel
+            {
+                ID = dr.GetInt32(0),
+                Nome = dr.GetString(1),
+                Valor = dr.GetDecimal(2),
+                Quantidade = dr.GetInt32(3),
+            };
+            return p;
         }
     }
 }

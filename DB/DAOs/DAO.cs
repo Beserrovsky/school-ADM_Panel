@@ -16,6 +16,7 @@ namespace FelipeB_App3BI.DB
         public abstract T Delete(T item);
         public abstract bool Exists(T item);
 
-        protected abstract MySqlParameter[] GetParameters();
+        protected abstract MySqlParameter[] GetParameters(T item);
+        protected abstract T ReadRecord(MySqlDataReader dr);
     }
 }
