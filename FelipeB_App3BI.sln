@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FelipeB_App3BI", "FelipeB_App3BI.csproj", "{259EA787-8143-496C-877D-4CB87B140002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{B0DA4C97-6AFE-4FF9-A77E-F97A455385DE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "ADM_PANEL_Dominio\Dominio.csproj", "{65C7595B-DE45-47F6-9234-3653170DF70D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{259EA787-8143-496C-877D-4CB87B140002}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{259EA787-8143-496C-877D-4CB87B140002}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{259EA787-8143-496C-877D-4CB87B140002}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0DA4C97-6AFE-4FF9-A77E-F97A455385DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0DA4C97-6AFE-4FF9-A77E-F97A455385DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0DA4C97-6AFE-4FF9-A77E-F97A455385DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0DA4C97-6AFE-4FF9-A77E-F97A455385DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65C7595B-DE45-47F6-9234-3653170DF70D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65C7595B-DE45-47F6-9234-3653170DF70D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65C7595B-DE45-47F6-9234-3653170DF70D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65C7595B-DE45-47F6-9234-3653170DF70D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

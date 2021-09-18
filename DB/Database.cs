@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace FelipeB_App3BI.DB
 {
-    class DB : IDisposable
+    class Database : IDisposable
     {
         private readonly MySqlConnection conn;
         private readonly string connectionStr;
 
-        public DB() 
+        public Database() 
         {
             connectionStr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 

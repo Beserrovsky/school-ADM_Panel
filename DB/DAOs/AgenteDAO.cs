@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 
-namespace Database
+namespace FelipeB_App3BI.DB
 {
     public class AgenteDAO
     {
@@ -12,7 +12,7 @@ namespace Database
         {
             List<AgenteModel> agentes = new List<AgenteModel>();
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from agentes_types_view", new MySqlParameter[0]);
 
@@ -51,7 +51,7 @@ namespace Database
 
             int agentes_count = 0;
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
 
                 MySqlDataReader dr = db.RunAndRead("Select COUNT(*) from Agente", new MySqlParameter[0]);
@@ -73,7 +73,7 @@ namespace Database
         {
             AgenteModel agente = null;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from agentes_types_view WHERE agentes_types_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -111,7 +111,7 @@ namespace Database
 
             // just in case....
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
                 MySqlDataReader dr = db.RunAndRead("Select UF from Estado ORDER BY Estado.UF ASC", new MySqlParameter[0]);
 
@@ -135,7 +135,7 @@ namespace Database
         public void Save(AgenteModel agente)
         {
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select Endereco_ID from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", agente.CPF) });
 
@@ -225,7 +225,7 @@ namespace Database
         {
             bool exists = false;
 
-            using (DB db = new DB()) 
+            using (Database db = new Database()) 
             {
                 MySqlDataReader dr = db.RunAndRead("Select * from Agente where Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("@cpf", cpf) });
 
@@ -237,7 +237,7 @@ namespace Database
 
         public void Delete(string cpf) 
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
 
                 MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });

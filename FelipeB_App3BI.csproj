@@ -165,9 +165,18 @@
     <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
+    <Compile Include="DB\DAOs\AgenteDAO.cs" />
+    <Compile Include="DB\DAOs\ClienteDAO.cs" />
+    <Compile Include="DB\DAOs\FuncionarioDAO.cs" />
+    <Compile Include="DB\DAOs\ProdutoDAO.cs" />
+    <Compile Include="DB\Database.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AgenteModel.cs" />
+    <Compile Include="Models\ClienteModel.cs" />
+    <Compile Include="Models\FuncionarioModel.cs" />
+    <Compile Include="Models\ProdutoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Masker.cs" />
   </ItemGroup>
@@ -331,16 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="ADM_PANEL_Dominio\Dominio.csproj">
-      <Project>{65c7595b-de45-47f6-9234-3653170df70d}</Project>
-      <Name>Dominio</Name>
-    </ProjectReference>
-    <ProjectReference Include="Database\Database.csproj">
-      <Project>{b0da4c97-6afe-4ff9-a77e-f97a455385de}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

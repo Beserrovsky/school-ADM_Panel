@@ -2,7 +2,7 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
-namespace Database
+namespace FelipeB_App3BI.DB
 {
     public class FuncionarioDAO
     {
@@ -11,7 +11,7 @@ namespace Database
         {
             List<FuncionarioModel> funcionarios = new List<FuncionarioModel>();
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view", new MySqlParameter[0]);
 
@@ -45,7 +45,7 @@ namespace Database
         {
             int funcionarios_count = 0;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from funcionarios_view", new MySqlParameter[0]);
 
@@ -67,7 +67,7 @@ namespace Database
         {
             FuncionarioModel funcionario = null;
 
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -99,7 +99,7 @@ namespace Database
 
         public void AddAgente(string cpf)
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 
@@ -115,7 +115,7 @@ namespace Database
 
         public void DelAgente(string cpf)
         {
-            using (DB db = new DB())
+            using (Database db = new Database())
             {
                 MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
 

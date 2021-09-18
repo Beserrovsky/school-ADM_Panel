@@ -1,5 +1,5 @@
 ﻿using FelipeB_App3BI.Models;
-using Database;
+using FelipeB_App3BI.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
