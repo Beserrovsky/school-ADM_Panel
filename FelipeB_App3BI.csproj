@@ -175,7 +175,6 @@
     <Compile Include="Models\Funcionario.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\Getter.cs" />
     <Compile Include="Util\Masker.cs" />
     <Compile Include="Database\Context.cs" />
     <Compile Include="Util\Validator.cs" />
