@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace FelipeB_App3BI.Models
 {
-    public class AgenteModel
+    public class AgenteModel : Model
     {
         [Required]
         [MaxLength(50)]
@@ -25,6 +25,11 @@ namespace FelipeB_App3BI.Models
 
         public bool IsFuncionario { get; set; }
 
+        public override bool Validate()
+        {
+            // TODO: VALIDATE MODEL 
+            return true;
+        }
     }
 
     public class Endereco 

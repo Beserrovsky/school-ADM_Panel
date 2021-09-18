@@ -162,12 +162,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AgenteController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ControllerCRUD.cs" />
     <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="DB\DAOs\AgenteDAO.cs" />
     <Compile Include="DB\DAOs\ClienteDAO.cs" />
     <Compile Include="DB\DAOs\FuncionarioDAO.cs" />
+    <Compile Include="DB\DAOs\DAO.cs" />
     <Compile Include="DB\DAOs\ProdutoDAO.cs" />
     <Compile Include="DB\Database.cs" />
     <Compile Include="Global.asax.cs">
@@ -176,6 +178,7 @@
     <Compile Include="Models\AgenteModel.cs" />
     <Compile Include="Models\ClienteModel.cs" />
     <Compile Include="Models\FuncionarioModel.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="Models\ProdutoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Masker.cs" />
@@ -321,11 +324,11 @@
     <Content Include="Views\Funcionario\Funcionarios.cshtml" />
     <Content Include="Views\Cliente\Clientes.cshtml" />
     <Content Include="Views\Agente\Dashboard.cshtml" />
-    <Content Include="Views\Produto\Produtos.cshtml" />
+    <Content Include="Views\Produto\Index.cshtml" />
     <Content Include="Views\Agente\Agente.cshtml" />
-    <Content Include="Views\Produto\Produto.cshtml" />
+    <Content Include="Views\Produto\Details.cshtml" />
     <Content Include="Views\Agente\AgenteForm.cshtml" />
-    <Content Include="Views\Produto\ProdutoForm.cshtml" />
+    <Content Include="Views\Produto\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

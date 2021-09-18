@@ -3,13 +3,17 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
+    <title>Erro</title>
 </head>
 <body>
     <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-        <h2>@Model</h2>
+        <h1 class="text-center bg-danger text-white rounded p-2">Erro!</h1>
+        <h2 class="text-center text-muted">Um erro ocorreu processando sua requisição.</h2>
+        <hr />
+        <h3>Mensagem de erro:</h3>
+        <h5>@Model.Message</h5>
+        <h3>Mais informações do erro:</h3>
+        <p>@Model</p>
     </hgroup>
 </body>
 </html>
