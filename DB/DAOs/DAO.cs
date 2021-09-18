@@ -11,9 +11,10 @@ namespace FelipeB_App3BI.DB
     {
         public abstract IEnumerable<T> Get();
         public abstract T Get(string ID);
-        public abstract T Post(T item);
-        public abstract T Patch(T item);
-        public abstract T Delete(string ID);
+        public abstract T GetLatest();
+        public abstract string Post(T item);
+        public abstract string Patch(T item);
+        public abstract string Delete(string ID);
         public abstract bool Exists(T item);
         public abstract bool Exists(string ID);
 

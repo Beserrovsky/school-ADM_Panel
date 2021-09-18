@@ -59,18 +59,19 @@ namespace FelipeB_App3BI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(M model) {
+        public ActionResult Save(M model) {
+            string ID = null;
             try
             {
                 if (!ModelState.IsValid || !model.Validate()) return View("Form", model);
-                if (DAO.Exists(model)) DAO.Patch(model);
-                else DAO.Post(model);
+                if (DAO.Exists(model)) ID = DAO.Patch(model);
+                else ID = DAO.Post(model);
             }
             catch (Exception e)
             {
                 return View("Error", e);
             }
-            return RedirectToAction("Details", model);
+            return RedirectToAction("Details", routeValues: new { ID });
         }
 
         [HttpPost]
