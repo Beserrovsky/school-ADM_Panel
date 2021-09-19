@@ -5,59 +5,19 @@ using System.Collections.Generic;
 
 namespace FelipeB_App3BI.DB
 {
-    public class ClienteDAO : DAO<ClienteModel>
+    public class ClienteDAO
     {
-        public override string Delete(string ID)
+        public bool Exists(FuncionarioModel item)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Exists(ClienteModel item)
+        public string Post(FuncionarioModel item)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Exists(string ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IEnumerable<ClienteModel> Get()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ClienteModel Get(string ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ClienteModel GetLatest()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string Patch(ClienteModel item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string Post(ClienteModel item)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override MySqlParameter[] GetIDParameter(string ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override MySqlParameter[] GetParameters(ClienteModel item)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override ClienteModel ReadRecord(MySqlDataReader dr)
+        public string Delete(string ID)
         {
             throw new NotImplementedException();
         }

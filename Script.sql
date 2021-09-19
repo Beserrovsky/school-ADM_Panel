@@ -8,13 +8,19 @@ CREATE TABLE Estado(
     Nome varchar(25) unique
 );
 
+CREATE TABLE Cidade(
+	ID int auto_increment primary key,
+	Nome varchar(50) unique
+);
+
 CREATE TABLE Endereco(
 	ID int auto_increment primary key,
-    Logradouro varchar(100),
-    Cidade varchar(50),
     Estado_UF varchar(2),
+    Cidade_ID int,
+    Logradouro varchar(100),
+    Numero int,
     foreign key (Estado_UF) references Estado(UF),
-    Numero int
+    foreign key (Cidade_ID) references Cidade(ID)
 );
 
 CREATE TABLE Agente(
@@ -42,33 +48,35 @@ CREATE TABLE Produto(
     Quantidade int
 );
 
-CREATE VIEW agentes_types_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Cidade, E.Estado_UF,
+CREATE VIEW agente_view AS
+SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, C.Nome as Cidade, E.Logradouro, E.Numero,
 	(SELECT COUNT(*) FROM Cliente WHERE Cliente.Agente_CPf = A.CPF) AS Cliente,
 	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario
 FROM Agente AS A
 LEFT JOIN Endereco AS E
-	ON E.ID = A.Endereco_ID;
+	ON E.ID = A.Endereco_ID
+LEFT JOIN Cidade AS C
+	ON E.Cidade_ID = C.ID;
 
 CREATE VIEW clientes_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Cidade, E.Estado_UF
+SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Estado_UF
 FROM Agente AS A
 RIGHT JOIN Cliente AS C
 	ON A.CPF = C.Agente_CPF
 LEFT JOIN Endereco AS E
-	ON E.ID = A.Endereco_ID;
-
-CREATE VIEW produtos_view AS
-SELECT P.Nome, P.Valor, P.Quantidade
-FROM Produto as P;
+	ON E.ID = A.Endereco_ID
+LEFT JOIN Cidade AS CI
+	ON E.Cidade_ID = CI.ID;
 
 CREATE VIEW funcionarios_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Cidade, E.Estado_UF
+SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Estado_UF
 FROM Agente AS A
 RIGHT JOIN Funcionario AS F
 	ON A.CPF = F.Agente_CPF
 LEFT JOIN Endereco AS E
-	ON E.ID = A.Endereco_ID;
+	ON E.ID = A.Endereco_ID
+LEFT JOIN Cidade AS C
+	ON E.Cidade_ID = C.ID;
 
 /* Initial DML */
 
@@ -108,11 +116,17 @@ VALUES
     ('Produto genérico 2', 5.25, 100),
     ('Produto genérico 3', 12.65, 10);
 
-INSERT INTO Endereco(Logradouro, Cidade, Estado_UF, Numero)
+INSERT INTO Cidade(Nome)
 VALUES
-	('R. Guaipá', 'São Paulo', 'SP', 678),
-    ('R. Pref. Olímpio de Melo', 'Rio de Janeiro', 'RJ', 1485),
-    ('Av. Flor de Seda', 'Belo Horizonte', 'MG', 154);
+	("São Paulo"),
+    ("Rio de Janeiro"),
+    ("Belo Horizonte");
+
+INSERT INTO Endereco(Logradouro, Cidade_ID, Estado_UF, Numero)
+VALUES
+	('R. Guaipá', 1, 'SP', 678),
+    ('R. Pref. Olímpio de Melo', 2, 'RJ', 1485),
+    ('Av. Flor de Seda', 3, 'MG', 154);
 
 INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID)
 VALUES
@@ -136,3 +150,5 @@ SELECT * FROM funcionarios_view;
 SELECT * FROM produtos_view;
 SELECT * FROM agentes_types_view;
 SELECT * FROM Agente;
+
+SELECT * FROM agente_view;

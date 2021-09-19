@@ -1,4 +1,5 @@
-﻿@model List<FelipeB_App3BI.Models.AgenteModel>
+﻿@model IEnumerable<FelipeB_App3BI.Models.AgenteModel>
+@using FelipeB_App3BI.Util 
 @{
     ViewBag.Title = "Agentes";
     ViewBag.ActiveIndex = 1;
@@ -36,19 +37,19 @@
         <div class="card-header text-center">
             <h1>Agentes</h1>
 
-            <span class="font-italic">Quantidade cadastrados: @ViewBag.AgentesCount</span>
+            <span class="font-italic">Quantidade cadastrados: @Model.Count()</span>
         </div>
         <div class="card-body">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].CPF)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Nome)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Telefone)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Endereco.Cidade)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Endereco.Estado)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model[0].Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model[0].Endereco.Numero)</th>
-                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Create")">+ Criar novo</a></div></th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.CPF)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Nome)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Telefone)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Cidade)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Estado)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model.Endereco.Numero)</th>
+                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Form")">+ Criar novo</a></div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,25 +57,25 @@
 
                         foreach (var m in Model)
                         {
-                            <tr class="pointer" onclick="window.location = '@Url.Action("Details", "Agente", new { cpf=m.CPF })'">
-                                <th scope="row">@m.CPF</th>
+                            <tr class="pointer" onclick="window.location = '@Url.Action("Details", "Agente", new { id = m.CPF })'">
+                                <th scope="row">@Masker.MaskCpf(m.CPF)</th>
                                 <td>@m.Nome</td>
-                                <td>@m.Telefone</td>
+                                <td>@Masker.MaskTelephone(m.Telefone)</td>
                                 <td>@m.Endereco.Cidade</td>
                                 <td>@m.Endereco.Estado</td>
                                 <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
                                 <td colspan="3">
                                     <div class="d-flex justify-content-between">
-                                        <a href="@Url.Action("Edit", new { cpf = m.CPF })" class="btn btn-outline-info rounded mr-1">Editar</a>
+                                        <a href="@Url.Action("Form", new { id = m.CPF })" class="btn btn-outline-info rounded mr-1">Editar</a>
 
                                         @using (Html.BeginForm(m.IsCliente ? "Del" : "Add", "Cliente", FormMethod.Post))
                                         {
-                                            <button class="btn btn-outline-@(m.IsCliente?"danger":"primary") rounded mr-1" type="submit" name="cpf" value="@m.CPF">@(m.IsCliente?"-":"+") 🧔</button>
+                                            <button class="btn btn-outline-@(m.IsCliente?"danger":"primary") rounded mr-1" type="submit" name="id" value="@m.CPF">@(m.IsCliente?"-":"+") 🧔</button>
                                         }
 
                                         @using (Html.BeginForm(m.IsFuncionario ? "Del" : "Add", "Funcionario", FormMethod.Post))
                                         {
-                                            <button class="btn btn-outline-@(m.IsFuncionario?"danger":"primary") rounded" type="submit" name="cpf" value="@m.CPF">@(m.IsFuncionario?"-":"+") 👷‍♂️</button>
+                                            <button class="btn btn-outline-@(m.IsFuncionario?"danger":"primary") rounded" type="submit" name="id" value="@m.CPF">@(m.IsFuncionario?"-":"+") 👷‍♂️</button>
                                         }
                                     </div>
                                 </td>

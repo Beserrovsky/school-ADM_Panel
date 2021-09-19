@@ -8,8 +8,31 @@ using System.Web.Mvc;
 
 namespace FelipeB_App3BI.Controllers
 {
-    public class FuncionarioController : ControllerCRUD<FuncionarioDAO, FuncionarioModel>
+    public class FuncionarioController : Controller
     {
 
+        public ActionResult Index()
+        {
+            IEnumerable<FuncionarioModel> models;
+            try
+            {
+                models = new AgenteDAO().GetFuncionarios();
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+            return View(models);
+        }
+
+        public ActionResult Add(string id)
+        {
+            return View("Error", new NotImplementedException());
+        }
+
+        public ActionResult Del(string id)
+        {
+            return View("Error", new NotImplementedException());
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace FelipeB_App3BI.DB
     {
         public abstract IEnumerable<T> Get();
         public abstract T Get(string ID);
-        public abstract T GetLatest();
         public abstract string Post(T item);
         public abstract string Patch(T item);
         public abstract string Delete(string ID);
@@ -19,7 +18,7 @@ namespace FelipeB_App3BI.DB
         public abstract bool Exists(string ID);
 
         protected abstract MySqlParameter[] GetParameters(T item);
-        protected abstract MySqlParameter[] GetIDParameter(string ID);
+        protected MySqlParameter[] GetIDParameter(string ID) { return new MySqlParameter[] { new MySqlParameter("id", ID) };}
         protected abstract T ReadRecord(MySqlDataReader dr);
     }
 }

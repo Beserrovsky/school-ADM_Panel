@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FelipeB_App3BI.Models.FuncionarioModel>
+@using FelipeB_App3BI.Util
+@{
+    ViewBag.Title = "Funcionários";
+    ViewBag.ActiveIndex = 1;
+}
+
+<div class="row">
+    <div class="col-12 card rounded link px-0 shadow">
+        <div class="card-header text-center">
+            <h1>Funcionários</h1>
+
+            <span class="font-italic">Quantidade cadastrados: @Model.Count()</span>
+        </div>
+        <div class="card-body py-2">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.CPF)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Nome)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Telefone)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Cidade)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Estado)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model.Endereco.Numero)</th>
+                        <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Form", "Agente")">+ Criar novo Agente</a></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var m in Model)
+                        {
+                            <tr class="pointer" onclick="window.location = '@Url.Action("Details", new { id = m.CPF })'">
+                                <th scope="row">@Masker.MaskCpf(m.CPF)</th>
+                                <td>@m.Nome</td>
+                                <td>@Masker.MaskTelephone(m.Telefone)</td>
+                                <td>@m.Endereco.Cidade</td>
+                                <td>@m.Endereco.Estado</td>
+                                <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="@Url.Action("Form", "Agente",  new { id = m.CPF })" class="btn btn-outline-info rounded mr-3">Editar Agente</a>
+
+                                        @using (Html.BeginForm("Del", "Funcionario", FormMethod.Post))
+                                        {
+                                            <button class="btn btn-outline-danger rounded" type="submit" name="id" value="@m.CPF">- 👷‍♂️</button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

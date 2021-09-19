@@ -11,6 +11,40 @@ namespace FelipeB_App3BI.Controllers
     public class AgenteController : ControllerCRUD<AgenteDAO, AgenteModel>
     {
 
+        [HttpGet]
+        public override ActionResult Index()
+        {
+            IEnumerable<AgenteModel> models;
+            try
+            {
+                models = this.DAO.Get();
+                ViewBag.ClientesCount = new AgenteDAO().GetClientes().Count();
+                ViewBag.FuncionariosCount = new AgenteDAO().GetFuncionarios().Count();
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+            return View(models);
+        }
+
+        [HttpGet]
+        public override ActionResult Form(string ID = null)
+        {
+            AgenteModel model = null;
+            try
+            {
+                if (ID != null) model = this.DAO.Get(ID);
+                ViewBag.Estados = ((AgenteDAO)this.DAO).GetEstados();
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+            return View(model);
+        }
+
+
         [HttpPost]
         public JsonResult CheckCpf(string cpf) 
         {
@@ -23,7 +57,7 @@ namespace FelipeB_App3BI.Controllers
         [HttpPost]
         public JsonResult CheckState(Endereco endereco)
         {
-            return Json(AgenteModel.IsEstadoValid(endereco.Estado));
+            return Json(Endereco.IsEstadoValid(endereco.Estado));
         }
 
     }

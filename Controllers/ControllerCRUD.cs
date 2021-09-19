@@ -17,7 +17,7 @@ namespace FelipeB_App3BI.Controllers
         public ControllerCRUD() { this.DAO = new D(); }
 
         [HttpGet]
-        public ActionResult Index() {
+        public virtual ActionResult Index() {
             IEnumerable<M> models;
             try
             {
@@ -45,7 +45,7 @@ namespace FelipeB_App3BI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Form(string ID = null) {
+        public virtual ActionResult Form(string ID = null) {
             M model = null;
             try
             {

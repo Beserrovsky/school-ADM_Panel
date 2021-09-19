@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FelipeB_App3BI.DB;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -29,7 +30,7 @@ namespace FelipeB_App3BI.Models
 
         public override bool Validate()
         {
-            return IsCpfValid(this.CPF) && IsEstadoValid(Endereco.Estado);
+            return IsCpfValid(CPF) && Endereco.IsEstadoValid(Endereco.Estado);
         }
 
         public static bool IsCpfValid(string cpf)
@@ -65,29 +66,29 @@ namespace FelipeB_App3BI.Models
 
             return true;
         }
-
-        public static bool IsEstadoValid(string state)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class Endereco 
     {
-        [Required]
-        [MaxLength(100)]
-        public string Logradouro { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        public string Cidade { get; set; }
-
         [Required]
         [MaxLength(2)]
         [Remote("CheckState", "Agente", HttpMethod = "POST", ErrorMessage = "Insira um Estado válido!")]
         public string Estado { get; set; }
 
         [Required]
+        [MaxLength(50)]
+        public string Cidade { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Logradouro { get; set; }
+
+        [Required]
         public int Numero { get; set; }
+
+        public static bool IsEstadoValid(string estado)
+        {
+            return new AgenteDAO().EstadoExists(estado);
+        }
     }
 }

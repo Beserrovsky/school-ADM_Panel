@@ -49,7 +49,7 @@ namespace FelipeB_App3BI.DB
             }
         }
 
-        public override ProdutoModel GetLatest()
+        public ProdutoModel GetLatest()
         {
             using (Database db = new Database())
             {
@@ -139,10 +139,6 @@ namespace FelipeB_App3BI.DB
                 new MySqlParameter("valor", item.Valor),
                 new MySqlParameter("quantidade", item.Quantidade)
             };
-        }
-
-        protected override MySqlParameter[] GetIDParameter(string ID) {
-            return new MySqlParameter[] { new MySqlParameter("id", ID) };
         }
 
         protected override ProdutoModel ReadRecord(MySqlDataReader dr)

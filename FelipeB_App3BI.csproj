@@ -321,13 +321,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Funcionario\Funcionarios.cshtml" />
-    <Content Include="Views\Cliente\Clientes.cshtml" />
-    <Content Include="Views\Agente\Dashboard.cshtml" />
+    <Content Include="Views\Funcionario\Index.cshtml" />
+    <Content Include="Views\Cliente\Index.cshtml" />
+    <Content Include="Views\Agente\Index.cshtml" />
     <Content Include="Views\Produto\Index.cshtml" />
-    <Content Include="Views\Agente\Agente.cshtml" />
+    <Content Include="Views\Agente\Details.cshtml" />
     <Content Include="Views\Produto\Details.cshtml" />
-    <Content Include="Views\Agente\AgenteForm.cshtml" />
+    <Content Include="Views\Agente\Form.cshtml" />
     <Content Include="Views\Produto\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
