@@ -12,7 +12,7 @@ namespace FelipeB_App3BI.Controllers
         where D : DAO<M>, new()
         where M : Model
     {
-        private readonly DAO<M> DAO;
+        protected readonly DAO<M> DAO;
 
         public ControllerCRUD() { this.DAO = new D(); }
 

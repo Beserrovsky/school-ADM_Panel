@@ -4,129 +4,61 @@ using System.Collections.Generic;
 
 namespace FelipeB_App3BI.DB
 {
-    public class FuncionarioDAO
+    public class FuncionarioDAO : DAO<FuncionarioModel>
     {
-
-        public List<FuncionarioModel> GetAll()
+        public override string Delete(string ID)
         {
-            List<FuncionarioModel> funcionarios = new List<FuncionarioModel>();
-
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        funcionarios.Add(new FuncionarioModel()
-                        {
-                            CPF = dr.GetString(0),
-                            Nome = dr.GetString(1),
-                            Telefone = dr.GetString(2),
-                            Endereco = new Endereco()
-                            {
-                                Logradouro = dr.GetString(3),
-                                Numero = dr.GetInt32(4),
-                                Cidade = dr.GetString(5),
-                                Estado = dr.GetString(6),
-                            }
-                        });
-                    }
-                }
-
-                dr.Close();
-            }
-
-            return funcionarios;
+            throw new System.NotImplementedException();
         }
 
-        public int Count()
+        public override bool Exists(FuncionarioModel item)
         {
-            int funcionarios_count = 0;
-
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from funcionarios_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        funcionarios_count = dr.GetInt32(0);
-                    }
-                }
-
-                dr.Close();
-            }
-
-            return funcionarios_count;
+            throw new System.NotImplementedException();
         }
 
-        public FuncionarioModel Get(string cpf)
+        public override bool Exists(string ID)
         {
-            FuncionarioModel funcionario = null;
-
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        funcionario = new FuncionarioModel()
-                        {
-                            CPF = dr.GetString(0),
-                            Nome = dr.GetString(1),
-                            Telefone = dr.GetString(2),
-                            Endereco = new Endereco()
-                            {
-                                Logradouro = dr.GetString(3),
-                                Numero = dr.GetInt32(4),
-                                Cidade = dr.GetString(5),
-                                Estado = dr.GetString(6),
-                            }
-                        };
-                    }
-                }
-
-                dr.Close();
-            }
-
-            return funcionario;
+            throw new System.NotImplementedException();
         }
 
-        public void AddAgente(string cpf)
+        public override IEnumerable<FuncionarioModel> Get()
         {
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-
-                bool already_created = dr.HasRows;
-
-                dr.Close();
-
-                if (already_created) return;
-
-                db.Run($"INSERT INTO Funcionario VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-            }
+            throw new System.NotImplementedException();
         }
 
-        public void DelAgente(string cpf)
+        public override FuncionarioModel Get(string ID)
         {
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from funcionarios_view WHERE funcionarios_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+            throw new System.NotImplementedException();
+        }
 
-                bool already_created = dr.HasRows;
+        public override FuncionarioModel GetLatest()
+        {
+            throw new System.NotImplementedException();
+        }
 
-                dr.Close();
+        public override string Patch(FuncionarioModel item)
+        {
+            throw new System.NotImplementedException();
+        }
 
-                if (!already_created) return;
+        public override string Post(FuncionarioModel item)
+        {
+            throw new System.NotImplementedException();
+        }
 
-                db.Run($"DELETE FROM Funcionario WHERE Funcionario.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-            }
+        protected override MySqlParameter[] GetIDParameter(string ID)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override MySqlParameter[] GetParameters(FuncionarioModel item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override FuncionarioModel ReadRecord(MySqlDataReader dr)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

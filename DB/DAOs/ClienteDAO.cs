@@ -5,146 +5,61 @@ using System.Collections.Generic;
 
 namespace FelipeB_App3BI.DB
 {
-    public class ClienteDAO
+    public class ClienteDAO : DAO<ClienteModel>
     {
-
-        public List<ClienteModel> GetAll()
+        public override string Delete(string ID)
         {
-            List<ClienteModel> clientes = new List<ClienteModel>();
-
-            using (Database db = new Database()) 
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from clientes_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        clientes.Add(new ClienteModel() 
-                        { 
-                            CPF = dr.GetString(0),
-                            Nome = dr.GetString(1),
-                            Telefone = dr.GetString(2),
-                            Endereco= new Endereco() 
-                            { 
-                                Logradouro = dr.GetString(3),
-                                Numero = dr.GetInt32(4),
-                                Cidade = dr.GetString(5),
-                                Estado = dr.GetString(6),
-                            }
-                        });
-                    }
-                }
-                
-                dr.Close();
-            }
-
-            return clientes;
+            throw new NotImplementedException();
         }
 
-        public int Count()
+        public override bool Exists(ClienteModel item)
         {
-            int clientes_count = 0;
-
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select COUNT(*) from clientes_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        clientes_count = dr.GetInt32(0);
-                    }
-                }
-
-                dr.Close();
-            }
-
-            return clientes_count;
+            throw new NotImplementedException();
         }
 
-        public ClienteModel Get(string cpf)
+        public override bool Exists(string ID)
         {
-            ClienteModel cliente = null;
-
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        cliente = new ClienteModel()
-                        {
-                            CPF = dr.GetString(0),
-                            Nome = dr.GetString(1),
-                            Telefone = dr.GetString(2),
-                            Endereco = new Endereco()
-                            {
-                                Logradouro = dr.GetString(3),
-                                Numero = dr.GetInt32(4),
-                                Cidade = dr.GetString(5),
-                                Estado = dr.GetString(6),
-                            }
-                        };
-                    }
-                }
-
-                dr.Close();
-            }
-
-            return cliente;
+            throw new NotImplementedException();
         }
 
-        public void AddAgente(string cpf) 
+        public override IEnumerable<ClienteModel> Get()
         {
-            using (Database db = new Database())
-            {
-                MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-
-                bool valid_agente = dr.HasRows;
-
-                dr.Close();
-
-                if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
-
-                dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-
-                bool already_cliente = dr.HasRows;
-
-                dr.Close();
-
-                if (already_cliente) throw new Exception("CPF já cadastrado como cliente!");
-
-                db.Run($"INSERT INTO Cliente VALUES (@cpf)", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-            }
+            throw new NotImplementedException();
         }
 
-        public void DelAgente(string cpf)
+        public override ClienteModel Get(string ID)
         {
-            using (Database db = new Database())
-            {
+            throw new NotImplementedException();
+        }
 
-                MySqlDataReader dr = db.RunAndRead($"Select * from Agente WHERE Agente.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+        public override ClienteModel GetLatest()
+        {
+            throw new NotImplementedException();
+        }
 
-                bool valid_agente = dr.HasRows;
+        public override string Patch(ClienteModel item)
+        {
+            throw new NotImplementedException();
+        }
 
-                dr.Close();
+        public override string Post(ClienteModel item)
+        {
+            throw new NotImplementedException();
+        }
 
-                if (!valid_agente) throw new Exception("CPF não cadastrado como Agente!");
+        protected override MySqlParameter[] GetIDParameter(string ID)
+        {
+            throw new NotImplementedException();
+        }
 
-                dr = db.RunAndRead($"Select * from clientes_view WHERE clientes_view.CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
+        protected override MySqlParameter[] GetParameters(ClienteModel item)
+        {
+            throw new NotImplementedException();
+        }
 
-                bool already_cliente = dr.HasRows;
-
-                dr.Close();
-
-                if (!already_cliente) throw new Exception("CPF não cadastrado como cliente!");
-
-                db.Run($"DELETE FROM Cliente WHERE Cliente.Agente_CPF=@cpf", new MySqlParameter[] { new MySqlParameter("cpf", cpf) });
-            }
+        protected override ClienteModel ReadRecord(MySqlDataReader dr)
+        {
+            throw new NotImplementedException();
         }
     }
 }

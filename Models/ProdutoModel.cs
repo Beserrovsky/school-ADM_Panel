@@ -17,10 +17,6 @@ namespace FelipeB_App3BI.Models
         [Required]
         public int Quantidade { get; set; }
 
-        public override bool Validate()
-        {
-            // TODO: VALIDATE MODEL 
-            return true;
-        }
+        public override bool Validate() => true;
     }
 }
