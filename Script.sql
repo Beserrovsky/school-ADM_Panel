@@ -59,7 +59,7 @@ LEFT JOIN Cidade AS C
 	ON E.Cidade_ID = C.ID;
 
 CREATE VIEW clientes_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Estado_UF
+SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, CI.Nome as Cidade, E.Logradouro, E.Numero
 FROM Agente AS A
 RIGHT JOIN Cliente AS C
 	ON A.CPF = C.Agente_CPF
@@ -69,7 +69,7 @@ LEFT JOIN Cidade AS CI
 	ON E.Cidade_ID = CI.ID;
 
 CREATE VIEW funcionarios_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Logradouro, E.Numero, E.Estado_UF
+SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, C.Nome as Cidade, E.Logradouro, E.Numero
 FROM Agente AS A
 RIGHT JOIN Funcionario AS F
 	ON A.CPF = F.Agente_CPF
@@ -150,5 +150,3 @@ SELECT * FROM funcionarios_view;
 SELECT * FROM produtos_view;
 SELECT * FROM agentes_types_view;
 SELECT * FROM Agente;
-
-SELECT * FROM agente_view;
