@@ -18,8 +18,8 @@ namespace FelipeB_App3BI.Controllers
             try
             {
                 models = this.DAO.Get();
-                ViewBag.ClientesCount = new AgenteDAO().GetClientes().Count();
-                ViewBag.FuncionariosCount = new AgenteDAO().GetFuncionarios().Count();
+                ViewBag.ClientesCount = new ClienteDAO().Get().Count();
+                ViewBag.FuncionariosCount = new FuncionarioDAO().Get().Count();
             }
             catch (Exception e)
             {
@@ -35,7 +35,7 @@ namespace FelipeB_App3BI.Controllers
             try
             {
                 if (ID != null) model = this.DAO.Get(ID);
-                ViewBag.Estados = ((AgenteDAO)this.DAO).GetEstados();
+                ViewBag.Estados = new AgenteDAO().GetEstados();
             }
             catch (Exception e)
             {

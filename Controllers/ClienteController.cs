@@ -10,12 +10,14 @@ namespace FelipeB_App3BI.Controllers
 {
     public class ClienteController : Controller
     {
+        private ClienteDAO DAO = new ClienteDAO();
+
         public ActionResult Index()
         {
             IEnumerable<ClienteModel> models;
             try
             {
-                models = new AgenteDAO().GetClientes();
+                models = DAO.Get();
             }
             catch (Exception e)
             {
@@ -25,12 +27,28 @@ namespace FelipeB_App3BI.Controllers
         }
 
         public ActionResult Add(string id) {
-            return View("Error", new NotImplementedException());
+            try
+            {
+                DAO.Post(id);
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+            return RedirectToAction("Details", "Agente", routeValues: id);
         }
 
         public ActionResult Del(string id)
         {
-            return View("Error", new NotImplementedException());
+            try
+            {
+                DAO.Delete(id);
+            }
+            catch (Exception e)
+            {
+                return View("Error", e);
+            }
+            return RedirectToAction("Details", "Agente", routeValues: id);
         }
     }
 }

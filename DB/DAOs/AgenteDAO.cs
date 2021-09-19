@@ -73,50 +73,6 @@ namespace FelipeB_App3BI.DB
             }
         }
 
-        public IEnumerable<ClienteModel> GetClientes()
-        {
-            using (Database db = new Database())
-            {
-                List<ClienteModel> clientes = new List<ClienteModel>();
-
-                MySqlDataReader dr = db.RunAndRead("Select * from clientes_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        clientes.Add(ReadCliente(dr));
-                    }
-                }
-
-                dr.Close();
-
-                return clientes;
-            }
-        }
-
-        public IEnumerable<FuncionarioModel> GetFuncionarios()
-        {
-            using (Database db = new Database())
-            {
-                List<FuncionarioModel> funcionarios = new List<FuncionarioModel>();
-
-                MySqlDataReader dr = db.RunAndRead("Select * from funcionarios_view", new MySqlParameter[0]);
-
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        funcionarios.Add(ReadFuncionario(dr));
-                    }
-                }
-
-                dr.Close();
-
-                return funcionarios;
-            }
-        }
-
         public override bool Exists(AgenteModel item)
         {
             using (Database db = new Database())
@@ -203,42 +159,6 @@ namespace FelipeB_App3BI.DB
                 }
             };
             return p;
-        }
-
-        protected FuncionarioModel ReadFuncionario(MySqlDataReader dr)
-        {
-            FuncionarioModel f = new FuncionarioModel
-            {
-                CPF = dr.GetString(0),
-                Nome = dr.GetString(1),
-                Telefone = dr.GetString(2),
-                Endereco = new Endereco()
-                {
-                    Estado = dr.GetString(3),
-                    Cidade = dr.GetString(4),
-                    Logradouro = dr.GetString(5),
-                    Numero = dr.GetInt32(6)
-                }
-            };
-            return f;
-        }
-
-        protected ClienteModel ReadCliente(MySqlDataReader dr)
-        {
-            ClienteModel c = new ClienteModel
-            {
-                CPF = dr.GetString(0),
-                Nome = dr.GetString(1),
-                Telefone = dr.GetString(2),
-                Endereco = new Endereco()
-                {
-                    Estado = dr.GetString(3),
-                    Cidade = dr.GetString(4),
-                    Logradouro = dr.GetString(5),
-                    Numero = dr.GetInt32(6)
-                }
-            };
-            return c;
         }
     }
 }
