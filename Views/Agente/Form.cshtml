@@ -24,11 +24,7 @@
             <div class="card-body">
                 @using (Html.BeginForm("Save", "Agente", FormMethod.Post))
                 {
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CPF)
-                        @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control" } })
-                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.CPF)</small>
-                    </div>
+                    <input type="text" name="cpf" value="@Model.CPF" class="d-none"/>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Nome)
                         @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })

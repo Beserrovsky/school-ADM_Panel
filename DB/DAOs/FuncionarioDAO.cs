@@ -31,17 +31,31 @@ namespace FelipeB_App3BI.DB
 
         public bool Exists(string ID)
         {
-            throw new NotImplementedException();
+            using (Database db = new Database())
+            {
+                MySqlDataReader dr = db.RunAndRead("SELECT * FROM funcionario WHERE agente_cpf = @id", new MySqlParameter[] { new MySqlParameter("id", ID) });
+                bool exists = dr.HasRows;
+                dr.Close();
+                return exists;
+            }
         }
 
         public string Post(string ID)
         {
-            throw new NotImplementedException();
+            using (Database db = new Database())
+            {
+                db.Run("INSERT INTO funcionario VALUES(@id)", new MySqlParameter[] { new MySqlParameter("id", ID) });
+                return ID;
+            }
         }
 
         public string Delete(string ID)
         {
-            throw new NotImplementedException();
+            using (Database db = new Database())
+            {
+                db.Run("DELETE FROM funcionario WHERE agente_cpf = @id", new MySqlParameter[] { new MySqlParameter("id", ID) });
+                return ID;
+            }
         }
 
         protected FuncionarioModel ReadRecord(MySqlDataReader dr)

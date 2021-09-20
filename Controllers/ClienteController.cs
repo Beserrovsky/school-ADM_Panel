@@ -29,26 +29,26 @@ namespace FelipeB_App3BI.Controllers
         public ActionResult Add(string id) {
             try
             {
-                DAO.Post(id);
+                if (!DAO.Exists(id)) DAO.Post(id);
             }
             catch (Exception e)
             {
                 return View("Error", e);
             }
-            return RedirectToAction("Details", "Agente", routeValues: id);
+            return RedirectToAction("Details", "Agente", routeValues: new { id });
         }
 
         public ActionResult Del(string id)
         {
             try
             {
-                DAO.Delete(id);
+                if (DAO.Exists(id)) DAO.Delete(id);
             }
             catch (Exception e)
             {
                 return View("Error", e);
             }
-            return RedirectToAction("Details", "Agente", routeValues: id);
+            return RedirectToAction("Details", "Agente", routeValues: new { id });
         }
     }
 }

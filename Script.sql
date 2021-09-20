@@ -9,18 +9,17 @@ CREATE TABLE Estado(
 );
 
 CREATE TABLE Cidade(
-	ID int auto_increment primary key,
-	Nome varchar(50) unique
+	Nome varchar(50) primary key
 );
 
 CREATE TABLE Endereco(
 	ID int auto_increment primary key,
     Estado_UF varchar(2),
-    Cidade_ID int,
+    Cidade_Nome varchar(50),
     Logradouro varchar(100),
     Numero int,
     foreign key (Estado_UF) references Estado(UF),
-    foreign key (Cidade_ID) references Cidade(ID)
+    foreign key (Cidade_Nome) references Cidade(Nome)
 );
 
 CREATE TABLE Agente(
@@ -51,12 +50,12 @@ CREATE TABLE Produto(
 CREATE VIEW agente_view AS
 SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, C.Nome as Cidade, E.Logradouro, E.Numero,
 	(SELECT COUNT(*) FROM Cliente WHERE Cliente.Agente_CPf = A.CPF) AS Cliente,
-	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario
+	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario, E.ID
 FROM Agente AS A
 LEFT JOIN Endereco AS E
 	ON E.ID = A.Endereco_ID
 LEFT JOIN Cidade AS C
-	ON E.Cidade_ID = C.ID;
+	ON E.Cidade_Nome = C.Nome;
 
 CREATE VIEW clientes_view AS
 SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, CI.Nome as Cidade, E.Logradouro, E.Numero
@@ -66,7 +65,7 @@ RIGHT JOIN Cliente AS C
 LEFT JOIN Endereco AS E
 	ON E.ID = A.Endereco_ID
 LEFT JOIN Cidade AS CI
-	ON E.Cidade_ID = CI.ID;
+	ON E.Cidade_Nome = CI.Nome;
 
 CREATE VIEW funcionarios_view AS
 SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, C.Nome as Cidade, E.Logradouro, E.Numero
@@ -76,7 +75,7 @@ RIGHT JOIN Funcionario AS F
 LEFT JOIN Endereco AS E
 	ON E.ID = A.Endereco_ID
 LEFT JOIN Cidade AS C
-	ON E.Cidade_ID = C.ID;
+	ON E.Cidade_Nome = C.Nome;
 
 /* Initial DML */
 
@@ -122,11 +121,11 @@ VALUES
     ("Rio de Janeiro"),
     ("Belo Horizonte");
 
-INSERT INTO Endereco(Logradouro, Cidade_ID, Estado_UF, Numero)
+INSERT INTO Endereco(Logradouro, Cidade_Nome, Estado_UF, Numero)
 VALUES
-	('R. Guaipá', 1, 'SP', 678),
-    ('R. Pref. Olímpio de Melo', 2, 'RJ', 1485),
-    ('Av. Flor de Seda', 3, 'MG', 154);
+	('R. Guaipá', "São Paulo", 'SP', 678),
+    ('R. Pref. Olímpio de Melo', "Rio de Janeiro", 'RJ', 1485),
+    ('Av. Flor de Seda', "Belo Horizonte", 'MG', 154);
 
 INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID)
 VALUES
@@ -147,6 +146,5 @@ VALUES
 
 SELECT * FROM clientes_view;
 SELECT * FROM funcionarios_view;
-SELECT * FROM produtos_view;
-SELECT * FROM agentes_types_view;
+SELECT * FROM agente_view;
 SELECT * FROM Agente;

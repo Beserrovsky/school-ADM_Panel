@@ -117,17 +117,93 @@ namespace FelipeB_App3BI.DB
 
         public override string Patch(AgenteModel item)
         {
-            throw new NotImplementedException();
+            int enderecoID = 0;
+            bool clienteExists = false, funcionarioExists = false;
+            using (Database db = new Database()) 
+            {
+                MySqlDataReader dr = db.RunAndRead("SELECT * FROM agente_view WHERE cpf = @id", GetIDParameter(item.CPF));
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read()) 
+                    {
+                        clienteExists = (dr.GetInt32(7) == 1);
+                        funcionarioExists = (dr.GetInt32(8) == 1);
+                        enderecoID = dr.GetInt32(9);
+                    }
+                }
+                else throw new Exception("Agente não cadastrado!");
+
+                dr.Close();
+
+                dr = db.RunAndRead("SELECT * FROM Cidade WHERE Nome = @cidade", GetParameters(item));
+                bool cityExits = dr.HasRows;
+                dr.Close();
+
+                if (!cityExits) db.Run("INSERT INTO Cidade VALUES(@cidade)", GetParameters(item));
+
+                db.Run($"UPDATE Endereco SET Estado_UF = @estado, Cidade_Nome = @cidade, Logradouro = @logradouro, Numero = @numero WHERE ID = {enderecoID}", GetParameters(item));
+                db.Run("UPDATE Agente SET Nome = @nome, Telefone = @telefone WHERE cpf = @cpf", GetParameters(item));
+            }
+
+            if (item.IsCliente && !clienteExists) new ClienteDAO().Post(item.CPF);
+            if (!item.IsCliente && clienteExists) new ClienteDAO().Delete(item.CPF);
+
+            if (item.IsFuncionario && !funcionarioExists) new FuncionarioDAO().Post(item.CPF);
+            if (!item.IsFuncionario && funcionarioExists) new FuncionarioDAO().Delete(item.CPF);
+
+            return item.CPF;
         }
 
         public override string Post(AgenteModel item)
         {
-            throw new NotImplementedException();
+            using (Database db = new Database())
+            {
+                MySqlDataReader dr = db.RunAndRead("SELECT * FROM Cidade WHERE Nome = @cidade", GetParameters(item));
+                bool cityExits = dr.HasRows;
+                dr.Close();
+
+                if(!cityExits) db.Run("INSERT INTO Cidade VALUES(@cidade)", GetParameters(item));
+
+                db.Run("INSERT INTO Endereco(Estado_UF, Cidade_Nome, Logradouro, Numero) VALUES(@estado, @cidade, @logradouro, @numero)", GetParameters(item));
+                dr = db.RunAndRead("SELECT ID FROM Endereco ORDER BY ID DESC LIMIT 1", new MySqlParameter[0]);
+                int enderecoID = 0;
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        enderecoID = dr.GetInt32(0);
+                    }
+                }
+                else throw new Exception("ENDERECO NOT FOUND!");
+                dr.Close();
+
+                db.Run($"INSERT INTO Agente VALUES(@cpf, @nome, @telefone, {enderecoID})", GetParameters(item));
+            }
+
+            var clienteDAO = new ClienteDAO();
+            bool exists = clienteDAO.Exists(item.CPF);
+            if (item.IsCliente && !exists) clienteDAO.Post(item.CPF);
+            if (!item.IsCliente && exists) clienteDAO.Delete(item.CPF);
+
+            var funcionarioDAO = new FuncionarioDAO();
+            exists = funcionarioDAO.Exists(item.CPF);
+            if (item.IsFuncionario && !exists) funcionarioDAO.Post(item.CPF);
+            if (!item.IsFuncionario && exists) funcionarioDAO.Delete(item.CPF);
+
+            return item.CPF;
         }
 
         public override string Delete(string ID)
         {
-            throw new NotImplementedException();
+            new ClienteDAO().Delete(ID);
+            new FuncionarioDAO().Delete(ID);
+
+            using (Database db = new Database()) 
+            {
+                db.Run("DELETE FROM Agente WHERE cpf = @id", GetIDParameter(ID));
+                return ID;
+            }
         }
 
         protected override MySqlParameter[] GetParameters(AgenteModel item)
@@ -156,7 +232,9 @@ namespace FelipeB_App3BI.DB
                     Cidade = dr.GetString(4),
                     Logradouro = dr.GetString(5),
                     Numero = dr.GetInt32(6)
-                }
+                },
+                IsCliente = (dr.GetInt32(7) == 1),
+                IsFuncionario = (dr.GetInt32(8) == 1)
             };
             return p;
         }
