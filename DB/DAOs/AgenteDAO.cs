@@ -117,7 +117,6 @@ namespace FelipeB_App3BI.DB
 
         public override string Patch(AgenteModel item)
         {
-            int enderecoID = 0;
             bool clienteExists = false, funcionarioExists = false;
             using (Database db = new Database()) 
             {
@@ -127,9 +126,8 @@ namespace FelipeB_App3BI.DB
                 {
                     while (dr.Read()) 
                     {
-                        clienteExists = (dr.GetInt32(7) == 1);
-                        funcionarioExists = (dr.GetInt32(8) == 1);
-                        enderecoID = dr.GetInt32(9);
+                        clienteExists = (dr.GetInt32(8) == 1);
+                        funcionarioExists = (dr.GetInt32(9) == 1);
                     }
                 }
                 else throw new Exception("Agente não cadastrado!");
@@ -142,8 +140,15 @@ namespace FelipeB_App3BI.DB
 
                 if (!cityExits) db.Run("INSERT INTO Cidade VALUES(@cidade)", GetParameters(item));
 
-                db.Run($"UPDATE Endereco SET Estado_UF = @estado, Cidade_Nome = @cidade, Logradouro = @logradouro, Numero = @numero WHERE ID = {enderecoID}", GetParameters(item));
-                db.Run("UPDATE Agente SET Nome = @nome, Telefone = @telefone WHERE cpf = @cpf", GetParameters(item));
+
+                dr = db.RunAndRead("SELECT * FROM Endereco WHERE CEP = @cep", GetParameters(item));
+                bool enderecoExists = dr.HasRows;
+                dr.Close();
+
+                if (!enderecoExists) db.Run("INSERT INTO Endereco VALUES(@cep, @estado, @cidade, @logradouro)", GetParameters(item));
+
+                db.Run($"UPDATE Endereco SET CEP = @cep, Estado_UF = @estado, Cidade_Nome = @cidade, Logradouro = @logradouro WHERE CEP = @cep", GetParameters(item));
+                db.Run("UPDATE Agente SET Nome = @nome, Telefone = @telefone, Numero = @numero, Endereco_CEP = @cep WHERE cpf = @cpf", GetParameters(item));
             }
 
             if (item.IsCliente && !clienteExists) new ClienteDAO().Post(item.CPF);
@@ -165,20 +170,15 @@ namespace FelipeB_App3BI.DB
 
                 if(!cityExits) db.Run("INSERT INTO Cidade VALUES(@cidade)", GetParameters(item));
 
-                db.Run("INSERT INTO Endereco(Estado_UF, Cidade_Nome, Logradouro, Numero) VALUES(@estado, @cidade, @logradouro, @numero)", GetParameters(item));
-                dr = db.RunAndRead("SELECT ID FROM Endereco ORDER BY ID DESC LIMIT 1", new MySqlParameter[0]);
-                int enderecoID = 0;
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        enderecoID = dr.GetInt32(0);
-                    }
-                }
-                else throw new Exception("ENDERECO NOT FOUND!");
+                dr = db.RunAndRead("SELECT * FROM Endereco WHERE CEP = @cep", GetParameters(item));
+                bool enderecoExists = dr.HasRows;
                 dr.Close();
 
-                db.Run($"INSERT INTO Agente VALUES(@cpf, @nome, @telefone, {enderecoID})", GetParameters(item));
+                if (!enderecoExists) db.Run("INSERT INTO Endereco VALUES(@cep, @estado, @cidade, @logradouro)", GetParameters(item));
+
+                db.Run($"UPDATE Endereco SET CEP = @cep, Estado_UF = @estado, Cidade_Nome = @cidade, Logradouro = @logradouro WHERE CEP = @cep", GetParameters(item));
+
+                db.Run($"INSERT INTO Agente VALUES(@cpf, @nome, @telefone, @cep, @numero)", GetParameters(item));
             }
 
             var clienteDAO = new ClienteDAO();
@@ -212,10 +212,11 @@ namespace FelipeB_App3BI.DB
                 new MySqlParameter("cpf", item.CPF),
                 new MySqlParameter("nome", item.Nome),
                 new MySqlParameter("telefone", item.Telefone),
+                new MySqlParameter("cep", item.Endereco.CEP),
                 new MySqlParameter("estado", item.Endereco.Estado),
                 new MySqlParameter("cidade", item.Endereco.Cidade),
                 new MySqlParameter("logradouro", item.Endereco.Logradouro),
-                new MySqlParameter("numero", item.Endereco.Numero)
+                new MySqlParameter("numero", item.Numero)
             };
         }
 
@@ -228,13 +229,14 @@ namespace FelipeB_App3BI.DB
                 Telefone = dr.GetString(2),
                 Endereco = new Endereco() 
                 {
-                    Estado = dr.GetString(3),
-                    Cidade = dr.GetString(4),
-                    Logradouro = dr.GetString(5),
-                    Numero = dr.GetInt32(6)
+                    CEP = dr.GetString(3),
+                    Estado = dr.GetString(4),
+                    Cidade = dr.GetString(5),
+                    Logradouro = dr.GetString(6),
                 },
-                IsCliente = (dr.GetInt32(7) == 1),
-                IsFuncionario = (dr.GetInt32(8) == 1)
+                Numero = dr.GetInt32(7),
+                IsCliente = (dr.GetInt32(8) == 1),
+                IsFuncionario = (dr.GetInt32(9) == 1)
             };
             return p;
         }

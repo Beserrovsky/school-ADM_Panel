@@ -67,18 +67,14 @@ namespace FelipeB_App3BI.DB
                 Telefone = dr.GetString(2),
                 Endereco = new Endereco()
                 {
-                    Estado = dr.GetString(3),
-                    Cidade = dr.GetString(4),
-                    Logradouro = dr.GetString(5),
-                    Numero = dr.GetInt32(6)
-                }
+                    CEP = dr.GetString(3),
+                    Estado = dr.GetString(4),
+                    Cidade = dr.GetString(5),
+                    Logradouro = dr.GetString(6),
+                },
+                Numero = dr.GetInt32(7)
             };
             return c;
-        }
-
-        public static implicit operator ClienteDAO(FuncionarioDAO v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

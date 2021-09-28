@@ -17,12 +17,15 @@ namespace FelipeB_App3BI.Models
         public string CPF { get; set; }
 
         [Phone]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Apenas números para seu telefone!")]
-        [StringLength(11, MinimumLength = 10, ErrorMessage = "Não se esqueça do DDD!")]
+        [RegularExpression("\\(\\d{2,}\\) \\d{4,}\\-\\d{4}", ErrorMessage = "Apenas caractéres especiais e números para seu telefone!")]
+        [StringLength(15, MinimumLength = 14, ErrorMessage = "Não se esqueça do DDD!")]
         public string Telefone { get; set; }
 
         [Required]
         public Endereco Endereco { get; set; }
+
+        [Required]
+        public int Numero { get; set; }
 
         public bool IsCliente { get; set; }
 
@@ -35,12 +38,21 @@ namespace FelipeB_App3BI.Models
 
         public static bool IsCpfValid(string cpf)
         {
-
-            if (cpf == null || cpf.Length != 11) return false; // Verifica se Array está mal formatado
+            if (cpf == null || cpf.Length != 14) return false; // Verifica se Array está mal formatado
 
             int[] cpf_arr = new int[11];
-            for (int i = 0; i < cpf.Length; i++)
-                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[i])) return false; // Converte de String para int[] e retorna falso caso não seja um número
+            int count = 0;
+            for (int i = 0; i < 3; i++)
+                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[count++])) return false; // Converte de String para int[] e retorna falso caso não seja um número
+
+            for (int i = 4; i < 7; i++)
+                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[count++])) return false;
+
+            for (int i = 8; i < 11; i++)
+                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[count++])) return false;
+
+            for (int i = 12; i < 14; i++)
+                if (!int.TryParse(cpf[i].ToString(), out cpf_arr[count++])) return false;
 
             int sum = 0;
 
@@ -71,6 +83,10 @@ namespace FelipeB_App3BI.Models
     public class Endereco 
     {
         [Required]
+        [StringLength(9, MinimumLength = 9, ErrorMessage = "Siga o padrão de CEP")]
+        public string CEP { get; set; }
+
+        [Required]
         [MaxLength(2)]
         [Remote("CheckState", "Agente", HttpMethod = "POST", ErrorMessage = "Insira um Estado válido!")]
         public string Estado { get; set; }
@@ -82,9 +98,6 @@ namespace FelipeB_App3BI.Models
         [Required]
         [MaxLength(100)]
         public string Logradouro { get; set; }
-
-        [Required]
-        public int Numero { get; set; }
 
         public static bool IsEstadoValid(string estado)
         {

@@ -19,12 +19,12 @@
                         }
                     </div>
                 </div>
-                <h6 class="text-muted font-italic">@Html.DisplayNameFor(model => model.CPF):&nbsp;@Masker.MaskCpf(Model.CPF)</h6>
+                <h6 class="text-muted font-italic">@Html.DisplayNameFor(model => model.CPF):&nbsp;@Model.CPF</h6>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Save", "Agente", FormMethod.Post))
                 {
-                    <input type="text" name="cpf" value="@Model.CPF" class="d-none"/>
+                    <input type="text" name="cpf" value="@Model.CPF" class="d-none" />
                     <div class="form-group">
                         @Html.LabelFor(model => model.Nome)
                         @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
@@ -48,14 +48,19 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.LabelFor(model => model.Endereco.CEP)
+                        @Html.EditorFor(model => model.Endereco.CEP, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.CEP)</small>
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(model => model.Endereco.Logradouro)
                         @Html.EditorFor(model => model.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
                         <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Logradouro)</small>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Endereco.Numero)
-                        @Html.EditorFor(model => model.Endereco.Numero, new { htmlAttributes = new { @class = "form-control" } })
-                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Numero)</small>
+                        @Html.LabelFor(model => model.Numero)
+                        @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Numero)</small>
                     </div>
                     <div class="form-check">
                         @Html.CheckBoxFor(model => model.IsCliente, new { id = "check_cliente", htmlAttributes = new { @class = "form-check-input", @id = "check_cliente" } })
@@ -112,14 +117,19 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.LabelFor(model => model.Endereco.CEP)
+                        @Html.EditorFor(model => model.Endereco.CEP, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.CEP)</small>
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(model => model.Endereco.Logradouro)
                         @Html.EditorFor(model => model.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
                         <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Logradouro)</small>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Endereco.Numero)
-                        @Html.EditorFor(model => model.Endereco.Numero, new { htmlAttributes = new { @class = "form-control" } })
-                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Endereco.Numero)</small>
+                        @Html.LabelFor(model => model.Numero)
+                        @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                        <small class="form-text text-danger">@Html.ValidationMessageFor(model => model.Numero)</small>
                     </div>
                     <div class="form-check">
                         @Html.CheckBoxFor(model => model.IsCliente, new { id = "check_cliente", htmlAttributes = new { @class = "form-check-input", @id = "check_cliente" } })
@@ -138,3 +148,19 @@
         </div>
     }
 }
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#CPF').mask('000.000.000-00', { reverse: true });
+            $("#Endereco_CEP").mask("00000-000");
+            $('#Telefone').mask('(00) Z0000-0000', {
+                translation: {
+                    'Z': {
+                        pattern: /[9]/, optional: true
+                    }
+                }
+            });
+        });
+    </script>
+} 

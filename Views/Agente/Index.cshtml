@@ -48,7 +48,7 @@
                         <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Telefone)</th>
                         <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Cidade)</th>
                         <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Estado)</th>
-                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model.Endereco.Numero)</th>
+                        <th scope="col" class="border-top-0">@Html.DisplayNameFor(Model => Model.Endereco.CEP): @Html.DisplayNameFor(Model => Model.Endereco.Logradouro) - @Html.DisplayNameFor(Model => Model.Numero)</th>
                         <th scope="col" class="border-top-0"><div class="d-flex justify-content-end"><a class="btn btn-success" href="@Url.Action("Form")">+ Criar novo</a></div></th>
                     </tr>
                 </thead>
@@ -58,12 +58,12 @@
                         foreach (var m in Model)
                         {
                             <tr class="pointer" onclick="window.location = '@Url.Action("Details", "Agente", new { id = m.CPF })'">
-                                <th scope="row">@Masker.MaskCpf(m.CPF)</th>
+                                <th scope="row">@m.CPF</th>
                                 <td>@m.Nome</td>
-                                <td>@Masker.MaskTelephone(m.Telefone)</td>
+                                <td>@m.Telefone</td>
                                 <td>@m.Endereco.Cidade</td>
                                 <td>@m.Endereco.Estado</td>
-                                <td>@m.Endereco.Logradouro - @m.Endereco.Numero</td>
+                                <td>@m.Endereco.CEP: @m.Endereco.Logradouro - @m.Numero</td>
                                 <td colspan="3">
                                     <div class="d-flex justify-content-between">
                                         <a href="@Url.Action("Form", new { id = m.CPF })" class="btn btn-outline-info rounded mr-1">Editar</a>

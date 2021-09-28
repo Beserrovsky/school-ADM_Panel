@@ -13,30 +13,30 @@ CREATE TABLE Cidade(
 );
 
 CREATE TABLE Endereco(
-	ID int auto_increment primary key,
+	CEP varchar(9) primary key, /* XXXXX-XXX -> 8 / 9 */
     Estado_UF varchar(2),
     Cidade_Nome varchar(50),
     Logradouro varchar(100),
-    Numero int,
     foreign key (Estado_UF) references Estado(UF),
     foreign key (Cidade_Nome) references Cidade(Nome)
 );
 
 CREATE TABLE Agente(
-	CPF varchar(11) primary key,
+	CPF varchar(14) primary key, /* XXX.XXX.XXX-XX -> 11 / 14 */
     Nome varchar(50),
-    Telefone varchar(11), /* 00000000000 ou 0000000000 -> (00) 9 0000-0000 ou (00) 0000-0000*/ 
-    Endereco_ID int,
-    foreign key (Endereco_ID) references Endereco(ID)
+    Telefone varchar(15), /* (XX) 9XXXX-XXXX -> 10 ou 11 / 15 */
+    Endereco_CEP varchar(9),
+    Numero int,
+    foreign key (Endereco_CEP) references Endereco(CEP)
 );
 
 CREATE TABLE Cliente(
-	Agente_CPF varchar(11) primary key,
+	Agente_CPF varchar(14) primary key,
     foreign key (Agente_CPF) references Agente(CPF)
 );
 
 CREATE TABLE Funcionario(
-	Agente_CPF varchar(11) primary key,
+	Agente_CPF varchar(14) primary key,
     foreign key (Agente_CPF) references Agente(CPF)
 );
 
@@ -48,32 +48,32 @@ CREATE TABLE Produto(
 );
 
 CREATE VIEW agente_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, C.Nome as Cidade, E.Logradouro, E.Numero,
+SELECT A.CPF, A.Nome, A.Telefone, E.CEP, E.Estado_UF, C.Nome as Cidade, E.Logradouro, A.Numero,
 	(SELECT COUNT(*) FROM Cliente WHERE Cliente.Agente_CPf = A.CPF) AS Cliente,
-	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario, E.ID
+	(SELECT COUNT(*) FROM Funcionario WHERE Funcionario.Agente_CPf = A.CPF) AS Funcionario
 FROM Agente AS A
 LEFT JOIN Endereco AS E
-	ON E.ID = A.Endereco_ID
+	ON E.CEP = A.Endereco_CEP
 LEFT JOIN Cidade AS C
 	ON E.Cidade_Nome = C.Nome;
 
 CREATE VIEW clientes_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, CI.Nome as Cidade, E.Logradouro, E.Numero
+SELECT A.CPF, A.Nome, A.Telefone, E.CEP, E.Estado_UF, CI.Nome as Cidade, E.Logradouro, A.Numero
 FROM Agente AS A
 RIGHT JOIN Cliente AS C
 	ON A.CPF = C.Agente_CPF
 LEFT JOIN Endereco AS E
-	ON E.ID = A.Endereco_ID
+	ON E.CEP = A.Endereco_CEP
 LEFT JOIN Cidade AS CI
 	ON E.Cidade_Nome = CI.Nome;
 
 CREATE VIEW funcionarios_view AS
-SELECT A.CPF, A.Nome, A.Telefone, E.Estado_UF, C.Nome as Cidade, E.Logradouro, E.Numero
+SELECT A.CPF, A.Nome, A.Telefone, E.CEP, E.Estado_UF, C.Nome as Cidade, E.Logradouro, A.Numero
 FROM Agente AS A
 RIGHT JOIN Funcionario AS F
 	ON A.CPF = F.Agente_CPF
 LEFT JOIN Endereco AS E
-	ON E.ID = A.Endereco_ID
+	ON E.CEP = A.Endereco_CEP
 LEFT JOIN Cidade AS C
 	ON E.Cidade_Nome = C.Nome;
 
@@ -121,26 +121,26 @@ VALUES
     ("Rio de Janeiro"),
     ("Belo Horizonte");
 
-INSERT INTO Endereco(Logradouro, Cidade_Nome, Estado_UF, Numero)
+INSERT INTO Endereco(CEP, Logradouro, Cidade_Nome, Estado_UF)
 VALUES
-	('R. Guaipá', "São Paulo", 'SP', 678),
-    ('R. Pref. Olímpio de Melo', "Rio de Janeiro", 'RJ', 1485),
-    ('Av. Flor de Seda', "Belo Horizonte", 'MG', 154);
+	('05089-000', 'R. Guaipá', "São Paulo", 'SP'),
+    ('20930-004', 'R. Pref. Olímpio de Melo', "Rio de Janeiro", 'RJ'),
+    ('30690-580', 'Av. Flor de Seda', "Belo Horizonte", 'MG');
 
-INSERT INTO Agente(CPF, Nome, Telefone, Endereco_ID)
+INSERT INTO Agente(CPF, Nome, Telefone, Endereco_CEP, Numero)
 VALUES
-	('92208673468', 'São Tomás de Aquino', '1189895656', 1),
-    ('28662918085', 'Marthin Luther King', '1512795256', 2),
-    ('39782459062', 'Nelson Mandela', '1198295556', 3);
+	('922.086.734-68', 'São Tomás de Aquino', '(11) 8989-5656', '05089-000', 678),
+    ('286.629.180-85', 'Marthin Luther King', '(15) 1279-5256', '20930-004', 1485),
+    ('397.824.590-62', 'Nelson Mandela', '(11) 99829-5556', '30690-580', 154);
 
 INSERT INTO Cliente(Agente_CPF)
 VALUES
-	('92208673468'),
-    ('39782459062');
+	('922.086.734-68'),
+    ('397.824.590-62');
 
 INSERT INTO Funcionario(Agente_CPF)
 VALUES
-	('28662918085');
+	('286.629.180-85');
     
 /* DQL */
 
